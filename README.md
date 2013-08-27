@@ -3,6 +3,8 @@ WordPress-gSearch-plus
 
 Improves the WordPress search engine without messing with the database, sorts results by relevance, and more. Simple and clean!
 
+gSearch Plus plugin improves WordPress' default mechanism by searching through custom taxonomies (including category and tags) and custom fields. It orders the results by relevance, calculating the search words hits through the title and content of each post. This plugin also includes a stopwords mechanism to remove the non-relevant words from the query, thus increasing the relevance of the results. Stopwords can be defined manually (using the WP admin) or by using the default files provided with the plugin package.
+
 ## Features
 
 * Searches through all the posts, pages and custom post types, by title and content (AND query)
