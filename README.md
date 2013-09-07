@@ -44,6 +44,15 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 ## Changelog
 
+### 1.1.8
+* Load frontend script on footer
+* Default highlight area div#content
+
+### 1.1.7
+* Admin: Replaced color picker - using WP default
+* Admin: New setting 'Highlight allowed areas' uses valid jQuery selectors
+* jQuery scripts enqueued differently on frontend thus solving Jetpack conflicts
+
 ### 1.1.6
 * Revision and testing for WP 3.6
 
