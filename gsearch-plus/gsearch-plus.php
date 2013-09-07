@@ -1,7 +1,7 @@
 <?php 
 /*
 Plugin Name: gSearch Plus
-Version: 1.1.6
+Version: 1.1.8
 Plugin URI: http://www.gomo.pt/plugins/gsearch-plus/
 Description: Improves the WordPress search engine without messing with the database, sorts results by relevance, and more. Simple and clean!
 Author: Luis Godinho
@@ -36,7 +36,7 @@ if ( !defined('DB_NAME') ) {
 	die;
 }
 
-define( 'GOMO_SP_VERSION', '1.1.6' );
+define( 'GOMO_SP_VERSION', '1.1.8' );
 
 
 if ( !defined('GOMO_SP_URL') )
@@ -73,6 +73,13 @@ if ( is_admin() ) {
 function gomo_sp_activation() {
 	//set default options if not created already
 	$options = get_option( 'gomo_searchplus_options' );
+	
+	//migrate highlight color from previous version of color picker (since v1.1.7)
+	if( isset( $options['highlight_color'] ) && false === strpos( $options['highlight_color'], '#' ) ) {
+		$options['highlight_color'] = '#'. $options['highlight_color'];
+		update_option( 'gomo_searchplus_options', $options );
+	}
+	
 	if( !is_array( $options ) ) {
 		$options = array();
 		$options['version'] = GOMO_SP_VERSION;
@@ -80,7 +87,8 @@ function gomo_sp_activation() {
 		$options['stopwords'] = 0; // do not use stopwords
 		$options['custom_fields'] = 0; // do not search on custom fields
 		$options['highlight'] = 0; // do not highlight searched terms
-		$options['highlight_color'] = '4AFF92'; // highlight color
+		$options['highlight_color'] = '#ffffff'; // highlight color
+		$options['highlight_area'] = '#content'; // highlight area
 //		$options['exclude_tax-post_tags'] = 0;
 		$options['specific_stops'] = 'word1,word2';
 		$options['enable_tax'] = 1; // Enable search on taxonomies by default

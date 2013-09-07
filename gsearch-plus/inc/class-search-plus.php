@@ -29,8 +29,7 @@ class GOMO_Search_Plus {
 			add_filter('get_search_query', array($this, 'gomo_sp_return_search_query'), 1);
 			// highlight filters
 			if( isset( $this->options['highlight'] ) &&  $this->options['highlight'] == 1) {
-				add_action( 'wp_enqueue_scripts', array( $this, 'gomo_sp_load_jshighlight') );
-				add_action( 'wp_footer', array( $this, 'gomo_sp_highlight_terms') );
+				add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles_scripts') );
 			}	
 		}
 	}
@@ -304,26 +303,16 @@ class GOMO_Search_Plus {
 	/**
 	 * register js to highlight the searched terms
 	 */
-	function gomo_sp_load_jshighlight() {
+	function enqueue_styles_scripts() {
 		if( !empty( $this->search_terms ) && $this->options['highlight_color'] != '' ) {
-			wp_register_script( 'gomo_jshighlight', GOMO_SP_URL . 'lib/jshighlight/jshighlight.js', array('jquery')  ); 
-			wp_enqueue_script( 'gomo_jshighlight' );
-		}
-	}
-	
-	function gomo_sp_highlight_terms() {
-		if( !empty( $this->search_terms ) && $this->options['highlight_color'] != '' ) {
+			wp_register_script( 'gsp-highlight', GOMO_SP_URL . 'js/gsp-highlight.js', array('jquery'), '1.1.7', true );
+			wp_enqueue_script( 'gsp-highlight' );
+			
 			$terms = explode(' ', trim( $this->search_terms ) );
-			echo '<script type="text/javascript">';
-			echo '	jQuery(document).ready(function() {';
-			echo '		var searchTerms = [';
-			foreach( $terms as $term ) {
-				echo '"'. $term . '",';
-			}
-			echo '];';
-			echo '		highlightTermsIn( jQuery(document.body) , searchTerms, "#'. $this->options['highlight_color'] .'");';
-			echo '	});';
-			echo '</script>';
+			
+			if( empty( $this->options['highlight_area'] ) ) { $this->options['highlight_area'] = '#content'; }
+			
+			wp_localize_script( 'gsp-highlight', 'highlight_args', array( 'area' => apply_filters( 'gsp_highlight_area', $this->options['highlight_area'] ) , 'color' => $this->options['highlight_color'], 'search_terms' => $terms ) );
 		}
 	}
 	

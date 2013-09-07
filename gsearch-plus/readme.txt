@@ -4,7 +4,7 @@ Donate link: http://plugins.gomo.pt/plugins/gsearch-plus/
 Tags: search, wordpress search, relevance, better search, custom post types search, custom taxonomies search, custom fields, stopwords, stella multi-language, highlight search terms
 Requires at least: 3.5
 Tested up to: 3.6
-Stable tag: 1.1.6
+Stable tag: 1.1.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,6 +26,7 @@ This plugin also includes a stopwords mechanism to remove the non-relevant words
 * Extends search to custom fields (AND query)
 * Sorts results by relevance
 * Highlights searched terms (optional)
+* Limit highlight feature to specific html elements (**NEW!**)
 * Removes stopwords from search query
 * Integrates the stopwords mechanism with Stella multi-language plugin, by removing the current language stopwords from the search query
 
@@ -34,7 +35,6 @@ Very easy to use and setup! No new database tables or complex configurations. gS
 
 
 = Notes =
-* Highlight search terms feature conflicts with `Jetpack by WordPress.com` plugin
 * This release is not compatible with the new multisite feature of WordPress 3.0 yet. We're working on that!
 * This release is compatible with all WordPress versions since 3.5. If you are still using an older one, upgrade your WordPress **NOW!**
 
@@ -71,6 +71,15 @@ In order get this working properly you need to make sure there is a stopwords fi
 
 
 == Changelog ==
+
+= 1.1.8 =
+* Load frontend script on footer
+* Default highlight area div#content
+
+= 1.1.7 =
+* Admin: Replaced color picker - using WP default
+* Admin: New setting 'Highlight allowed areas' uses valid jQuery selectors
+* jQuery scripts enqueued differently on frontend thus solving Jetpack conflicts
 
 = 1.1.6 =
 * Revision and testing for WP 3.6

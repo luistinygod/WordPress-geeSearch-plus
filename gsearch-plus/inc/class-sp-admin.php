@@ -13,6 +13,8 @@ if ( !defined( 'GOMO_SP_VERSION' ) ) {
  */
 class GOMO_Search_Plus_admin {
 	
+	private $options_page_hook;
+	
 	/**
 	 * Class constructor
 	 */
@@ -22,12 +24,60 @@ class GOMO_Search_Plus_admin {
 	}	
 
 	function gomo_search_admin_menu() {
-		$page_hook_suffix = add_options_page( 'gSearch Plus','gSearch Plus','manage_options','gomo-search-plus', array($this, 'gomo_search_settings_page') );
-		add_action('admin_print_scripts-' . $page_hook_suffix, array($this,'gomo_sp_admin_print_scripts'));
+		$this->options_page_hook = add_options_page( 'gSearch Plus','gSearch Plus','manage_options','gomo-search-plus', array($this, 'gomo_search_settings_page') );
+		
+		// Add contextual help tab
+		add_action('load-'. $this->options_page_hook, array( $this, 'add_contextual_help_tab'), 10 );
+		
+		add_action( 'admin_print_scripts-' . $this->options_page_hook, array( $this,'admin_print_scripts' ) );
+		add_action( 'admin_print_styles-' . $this->options_page_hook, array( $this, 'admin_print_styles' ) );
 	}
 	
-	function gomo_sp_admin_print_scripts() {
-		wp_enqueue_script( 'gomo-jscolor' );
+	function admin_print_scripts() {
+		wp_enqueue_script( 'gsp-admin' );
+	}
+	
+	function admin_print_styles() {
+		wp_enqueue_style( 'wp-color-picker' );
+	}
+	
+	/** Add contextual help tab */
+	function add_contextual_help_tab() {
+	
+		$screen = get_current_screen();
+		if( $screen->id != $this->options_page_hook )
+			return;
+				
+		$screen->add_help_tab( array(
+			'id' => 'highlight',
+			'title' => __('Highlight searched terms', 'gsearch-plus'),
+			'content' => $this->contextual_help_content( 'highlight' )
+		));
+	
+	}
+	
+	/** Add contextual help content */
+	function contextual_help_content( $context = '' ) {
+		$html = '';
+		
+		switch( $context ) {
+			case 'highlight':
+				$html = '<h3>' . __('Highlight searched terms', 'gsearch-plus') .'</h3>';
+				$html .= '<p>The field <strong>Highlight allowed areas</strong> enables the possibility to define the website areas where the plugin can highlight terms. It is defined to be a jQuery selector so it accepts any valid selector. </p>';
+				$html .= '<p><strong>Examples:</strong></p>';
+				$html .= '<ul>';
+				$html .= '<li>Use <em>article.type-post</em> to highlight only searched terms found on the articles titles and contents with the <em>type-post</em> html class</li>';
+				$html .= '<li>Use <em>#content</em> to highlight searched terms found on the <em>content</em> html div id.</li>';
+				$html .= '</ul>';
+				$html .= '<p>Both examples work perfectly on WordPress Twenty Thirteen default theme.</p>';
+				break;
+				
+			case 'xpto':
+				// add $html
+				break;
+
+		}
+		return $html;
 	}
 	
 	function gomo_search_settings_page() {
@@ -70,7 +120,7 @@ class GOMO_Search_Plus_admin {
 	function gomo_search_register_settings() {
 	
 		//register jQuery scripts
-		wp_register_script( 'gomo-jscolor', GOMO_SP_URL . 'lib/jscolor/jscolor.js' );
+		wp_register_script( 'gsp-admin', GOMO_SP_URL . 'js/gsp-admin.js', array('jquery', 'wp-color-picker') );
 		
 		//register Search+ settings - gomo_searchplus_options
 		register_setting( 'gomo-search-settings-group', 'gomo_searchplus_options', array($this, 'gomo_settings_sanitize'));
@@ -109,11 +159,13 @@ class GOMO_Search_Plus_admin {
 		// Exclude taxonomies from search
 		add_settings_field( 'gomo-settings-taxonomies', 'Exclude Taxonomies', array($this,'gomo_settings_exclude_taxonomies'), 'gomo-search-plus', 'gomo-settings-section-exclude', array( 'value' => $options ) );
 		
-		// SECTION:  Highlight search terms terms 
+		// SECTION:  Highlight search terms terms
 		// enable highlight
 		add_settings_field( 'gomo-settings-highlight', 'Highlight searched terms', array($this,'gomo_settings_checkbox'), 'gomo-search-plus', 'gomo-settings-section-highlight', array( 'name' => 'gomo_searchplus_options[highlight]', 'key' => 'highlight', 'value' => $options ) );
 		// color picker
 		add_settings_field( 'gomo-settings-colorpicker', 'Highlight color', array($this,'gomo_settings_color_picker'), 'gomo-search-plus', 'gomo-settings-section-highlight', array( 'name' => 'gomo_searchplus_options[highlight_color]', 'value' => $options ) );
+		// highlight allowed area
+		add_settings_field( 'gomo-settings-highlight-area', 'Highlight allowed areas (NEW!)', array( $this,'render_input_text'), 'gomo-search-plus', 'gomo-settings-section-highlight', array( 'name' => 'gomo_searchplus_options[highlight_area]', 'key' =>'highlight_area' , 'value' => $options ) );
 		
 	}
 	
@@ -167,19 +219,21 @@ class GOMO_Search_Plus_admin {
 	}
 	
 	
-	function gomo_settings_text_input( $args ) {
+	function render_input_text( $args ) {
 		$name = esc_attr( $args['name'] );
-		$value = esc_attr( $args['value'] );
-		echo '<input type="text" name="'. $name.'" value="'. $value.'" style="width: 140px;"/>';
+		$key = $args['key'];
+		$value = ( isset( $args['value'][ $key ] ) ) ? $args['value'][ $key ] : '';
+		
+		echo '<input type="text" name="'. $name.'" value="'. $value .'" class="regular-text ltr">';
 	}
 	
 	function gomo_settings_color_picker( $args ) {
 		$name = esc_attr( $args['name'] );
 		$options = $args['value'];
 		if( !isset( $options['highlight_color'] ) ) {
-			$options['highlight_color'] = '4AFF92';
+			$options['highlight_color'] = '#ffffff';
 		}
-		echo '<input class="color" name="'. $name.'" value="'. $options['highlight_color'] .'" style="width: 140px;"/>';
+		echo '<input type="text" name="'. $name .'" value="'. $options['highlight_color'] .'" class="wp-color-picker-field" data-default-color="#ffffff">';
 	}
 	
 	
