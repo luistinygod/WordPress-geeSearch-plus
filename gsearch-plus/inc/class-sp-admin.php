@@ -94,7 +94,7 @@ class Gee_Search_Plus_admin {
 			</div>
 			
 			<div class="postbox-container" style="width:20%; padding-left: 2%;min-width:210px;max-width:210px;border-left: 1px solid #ddd;">
-				<a target="_blank" href="http://www.geethemes.com/"><img src="<?php echo GEE_SP_URL . '/img/logo_geethemes.png'; ?>" alt="geeThemes Premium WordPress Themes & Plugins" /></a>
+				<a target="_blank" href="http://www.geethemes.com/"><img src="<?php echo GEE_SP_URL . '/img/geethemes-logo.png'; ?>" alt="geeThemes Premium WordPress Themes & Plugins" /></a>
 				<br>
 				<hr>
 				<h3>Like it?</h3>
