@@ -1,14 +1,14 @@
 <?php
 /**
- * @package Search_Plus Engine
+ * @package geeSearch_Plus Engine
  */
 
-if ( !defined( 'GOMO_SP_VERSION' ) ) {
+if ( !defined( 'GEE_SP_VERSION' ) ) {
 	header( 'HTTP/1.0 403 Forbidden' );
 	die;
 }
 
-class GOMO_Search_Plus {
+class Gee_Search_Plus_Engine {
 	// keeps the plugin options
 	private $options;
 	
@@ -23,14 +23,22 @@ class GOMO_Search_Plus {
 	
 	function __construct() {
 		//load options
-		$this->options = get_option( 'gomo_searchplus_options' );
+		$this->options = get_option( 'gee_searchplus_options' );
+		
 		if( isset( $this->options['enable'] ) &&  $this->options['enable'] == 1) {
-			add_action( 'pre_get_posts', array($this, 'gomo_sp_extend_search') );
-			add_filter('get_search_query', array($this, 'gomo_sp_return_search_query'), 1);
+			//capture search query
+			add_action( 'pre_get_posts', array($this, 'capture_extend_search') );
+			
+			//make WordPress thinks it is running a Search
+			// add_action( 'wp', array($this, '_search') ); 
+			
+			//hook the function get_search_query
+			add_filter( 'get_search_query', array($this, 'return_search_query'), 1);
+			
 			// highlight filters
 			if( isset( $this->options['highlight'] ) &&  $this->options['highlight'] == 1) {
 				add_action( 'wp_enqueue_scripts', array( $this, 'enqueue_styles_scripts') );
-			}	
+			}
 		}
 	}
 	
@@ -38,7 +46,7 @@ class GOMO_Search_Plus {
 	/**
 	 * Extends search according to options
 	 */
-	function gomo_sp_extend_search( $query ) {
+	function capture_extend_search( $query ) {
 		
 		if( $query->is_admin == 1 || !$query->is_search() || !$query->is_main_query() ) {
 			return;
@@ -55,7 +63,7 @@ class GOMO_Search_Plus {
 		$this->extra_results_ids = array();
 		
 		//1. Remove stopwords
-		$this->gomo_sp_remove_stopwords();
+		$this->remove_stopwords();
 		$this->search_terms = preg_replace('/\s+/', ' ', trim( $this->search_terms ));
 		
 		if( empty( $this->search_terms ) || $this->search_terms == ' ' ) {
@@ -65,20 +73,20 @@ class GOMO_Search_Plus {
 		}
 		
 		//2. Run the original search query and sort
-		$this->gomo_sp_query_original( $query->query_vars );
+		$this->process_original_query( $query->query_vars );
 		
 		//3. Query taxonomies
-		$this->gomo_sp_query_taxonomies();
+		$this->process_query_taxonomies();
 		
 		$this->original_results_ids = array_merge($this->original_results_ids, $this->extra_results_ids);
 		
 		//3.1 Query custom fields
-		$this->gomo_sp_query_custom_fields();
+		$this->process_query_custom_fields();
 		
 		$this->original_results_ids = array_merge($this->original_results_ids, $this->extra_results_ids);
 		
 		//3.2 Hook for external filters to change the search results so far.
-		$filter_result = apply_filters( 'geesp_original_results', $this->original_results_ids, $this->search_terms, $query->query_vars );
+		$filter_result = apply_filters( 'gee_search_original_results', $this->original_results_ids, $this->search_terms, $query->query_vars );
 		
 		if( isset( $filter_result ) && is_array( $filter_result ) && !empty( $filter_result ) ) {
 			$this->original_results_ids = array_merge( $this->original_results_ids, $filter_result );
@@ -90,7 +98,7 @@ class GOMO_Search_Plus {
 		if( !empty($this->original_results_ids) ) {
 			$query->set( 's', '' );
 			$query->set( 'post__in', $this->original_results_ids );
-			$query->set('orderby', 'post__in');
+			$query->set( 'orderby', 'post__in');
 			//$query->set('no_found_rows', 1 );
 			//$query->set('update_post_meta_cache', 0 );
 			//$query->set('update_post_term_cache', 0 );
@@ -103,7 +111,7 @@ class GOMO_Search_Plus {
 	/**
 	 * Removes all the stopwords from the search terms
 	 */
-	function gomo_sp_remove_stopwords() {
+	function remove_stopwords() {
 		
 		// check if stopwords mechanism is enabled 
 		if( !isset( $this->options['stopwords'] ) || ( isset( $this->options['stopwords'] ) && $this->options['stopwords'] === '0' ) ) {
@@ -120,13 +128,13 @@ class GOMO_Search_Plus {
 		
 		if( $this->options['stopwords'] == 'stella') {
 			if( defined( 'STELLA_CURRENT_LANG' ) ) {
-				if( file_exists( GOMO_SP_PATH .'stop/stopwords-'. STELLA_CURRENT_LANG  .'.php' ) ) {
-					include( GOMO_SP_PATH .'stop/stopwords-'. STELLA_CURRENT_LANG  .'.php' );
+				if( file_exists( GEE_SP_PATH .'stop/stopwords-'. STELLA_CURRENT_LANG  .'.php' ) ) {
+					include( GEE_SP_PATH .'stop/stopwords-'. STELLA_CURRENT_LANG  .'.php' );
 				}
 			}
 		} elseif( $this->options['stopwords'] != '1' ) {
-			if( file_exists( GOMO_SP_PATH .'stop/stopwords-'. $this->options['stopwords']  .'.php' ) ) {
-				include( GOMO_SP_PATH .'stop/stopwords-'. $this->options['stopwords']  .'.php' );
+			if( file_exists( GEE_SP_PATH .'stop/stopwords-'. $this->options['stopwords']  .'.php' ) ) {
+				include( GEE_SP_PATH .'stop/stopwords-'. $this->options['stopwords']  .'.php' );
 			}
 		}
 		
@@ -137,7 +145,8 @@ class GOMO_Search_Plus {
 		}
 		
 		// apply filters if hooked
-		$stopwords = apply_filters( 'gomo_sp_stopwords', $stopwords );
+		$stopwords = apply_filters( 'gomo_sp_stopwords', $stopwords ); //deprecated
+		$stopwords = apply_filters( 'gee_search_stopwords', $stopwords ); // since 1.2.0
 		
 		//Remove stopwords from search terms
 		$words_filter = explode(' ', trim( $this->search_terms ) );
@@ -155,7 +164,7 @@ class GOMO_Search_Plus {
 	/**
 	 * Runs the original wordpress search query (title and contents) and sorts by relevance
 	 */
-	function gomo_sp_query_original( $qvars ) {
+	function process_original_query( $qvars ) {
 		
 		//runs the original query without paging
 		
@@ -193,7 +202,7 @@ class GOMO_Search_Plus {
 	/**
 	 * Runs the taxonomy query, excluding all the IDs from the original query
 	 */
-	function gomo_sp_query_taxonomies() {
+	function process_query_taxonomies() {
 		
 		//check if taxonomies search is enabled
 		if( !isset( $this->options['enable_tax'] ) || ( isset( $this->options['enable_tax'] ) && $this->options['enable_tax'] === '0' ) ) {
@@ -259,7 +268,7 @@ class GOMO_Search_Plus {
 	/**
 	 * Runs the custom fields query, excluding all the IDs from the original query
 	 */
-	function gomo_sp_query_custom_fields() {
+	function process_query_custom_fields() {
 		//check if custom fields search is enabled
 		if( !isset( $this->options['custom_fields'] ) || ( isset( $this->options['custom_fields'] ) && $this->options['custom_fields'] === '0' ) ) {
 			return;
@@ -296,7 +305,7 @@ class GOMO_Search_Plus {
 	/**
 	 * If theme uses get_search_query or the_search_query calls, then gSP returns the (filtered) search terms
 	 */
-	function gomo_sp_return_search_query() {
+	function return_search_query() {
 		return $this->search_terms;	
 	}
 	
@@ -305,7 +314,7 @@ class GOMO_Search_Plus {
 	 */
 	function enqueue_styles_scripts() {
 		if( !empty( $this->search_terms ) && $this->options['highlight_color'] != '' ) {
-			wp_register_script( 'gsp-highlight', GOMO_SP_URL . 'js/gsp-highlight.js', array('jquery'), '1.1.7', true );
+			wp_register_script( 'gsp-highlight', GEE_SP_URL . 'js/gsp-highlight.js', array('jquery'), '1.1.7', true );
 			wp_enqueue_script( 'gsp-highlight' );
 			
 			$terms = explode(' ', trim( $this->search_terms ) );

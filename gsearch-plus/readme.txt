@@ -1,10 +1,10 @@
-=== gSearch Plus, improved WordPress search ===
-Contributors: luistinygod
-Donate link: http://plugins.gomo.pt/plugins/gsearch-plus/
+=== geeSearch Plus, improved WordPress search ===
+Contributors: luistinygod, geethemes
+Donate link: http://www.geethemes.com
 Tags: search, wordpress search, relevance, better search, custom post types search, custom taxonomies search, custom fields, stopwords, stella multi-language, highlight search terms
 Requires at least: 3.5
-Tested up to: 3.6
-Stable tag: 1.1.8
+Tested up to: 3.6.1
+Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 

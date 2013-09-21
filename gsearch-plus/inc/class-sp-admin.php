@@ -1,17 +1,17 @@
 <?php
 /**
- * @package Gomo Search_Plus Admin
+ * @package  geeSearch_Plus Admin
  */
 
-if ( !defined( 'GOMO_SP_VERSION' ) ) {
+if ( !defined( 'GEE_SP_VERSION' ) ) {
 	header( 'HTTP/1.0 403 Forbidden' );
 	die;
 }
 
 /**
- *  Class to generate the admin page for the Search Plus Plugin
+ *  Class to generate the admin page for the geeSearch Plus Plugin
  */
-class GOMO_Search_Plus_admin {
+class Gee_Search_Plus_admin {
 	
 	private $options_page_hook;
 	
@@ -19,17 +19,18 @@ class GOMO_Search_Plus_admin {
 	 * Class constructor
 	 */
 	function __construct() {
-		add_action('admin_init', array( $this, 'gomo_search_register_settings') );
-		add_action('admin_menu', array( $this, 'gomo_search_admin_menu') );
-	}	
+		add_action( 'admin_init', array( $this, 'register_settings') );
+		add_action( 'admin_menu', array( $this, 'add_admin_menu') );
+	}
 
-	function gomo_search_admin_menu() {
-		$this->options_page_hook = add_options_page( 'gSearch Plus','gSearch Plus','manage_options','gomo-search-plus', array($this, 'gomo_search_settings_page') );
+	/** Add admin menu, context help and scripts */
+	function add_admin_menu() {
+		$this->options_page_hook = add_options_page( 'geeSearch Plus', 'geeSearch Plus', 'manage_options', 'gee-search-plus', array( $this, 'render_settings_page') );
 		
 		// Add contextual help tab
-		add_action('load-'. $this->options_page_hook, array( $this, 'add_contextual_help_tab'), 10 );
+		add_action( 'load-'. $this->options_page_hook, array( $this, 'add_contextual_help_tab'), 10 );
 		
-		add_action( 'admin_print_scripts-' . $this->options_page_hook, array( $this,'admin_print_scripts' ) );
+		add_action( 'admin_print_scripts-' . $this->options_page_hook, array( $this, 'admin_print_scripts' ) );
 		add_action( 'admin_print_styles-' . $this->options_page_hook, array( $this, 'admin_print_styles' ) );
 	}
 	
@@ -80,34 +81,31 @@ class GOMO_Search_Plus_admin {
 		return $html;
 	}
 	
-	function gomo_search_settings_page() {
+	function render_settings_page() {
 		?>
 		<div class="wrap">
-			<?php screen_icon('options-general'); ?><h2>gSearch Plus, improved WordPress search</h2>
+			<?php screen_icon('options-general'); ?><h2>geeSearch Plus, improved WordPress search</h2>
 			<div class="postbox-container" style="width:70%;margin-right: 5%;min-width:400px;max-width:700px;">
 				<form action="options.php" method="POST">
-					<?php settings_fields( 'gomo-search-settings-group' ); ?>
-					<?php do_settings_sections( 'gomo-search-plus' ); ?>
+					<?php settings_fields( 'gee-search-settings-group' ); ?>
+					<?php do_settings_sections( 'gee-search-plus' ); ?>
 					<?php submit_button(); ?>
 				</form>
 			</div>
 			
 			<div class="postbox-container" style="width:20%; padding-left: 2%;min-width:210px;max-width:210px;border-left: 1px solid #ddd;">
-				<a target="_blank" href="http://plugins.gomo.pt/"><img src="<?php echo GOMO_SP_URL . '/img/logo_gomo.png'; ?>" alt="GOMO agency logo" /></a>
-				<h3>Need help with your website?</h3>
-				<p><a href="mailto:gomo@gomo.pt">GOMO</a> is a design and web development studio specialized in WordPress!</p>
-				<?php /* <br><hr>
-				<h3>Resources          <a target="_blank" class="button-secondary" href="http://www.gomo.pt/plugins/gsearch-plus/">Visit us ›</a></h3>
-				<p>Read documentation, learn more about this plugin and find some tips for your web project. </p> */ ?>
-				<br><hr>
+				<a target="_blank" href="http://www.geethemes.com/"><img src="<?php echo GEE_SP_URL . '/img/logo_geethemes.png'; ?>" alt="geeThemes Premium WordPress Themes & Plugins" /></a>
+				<br>
+				<hr>
 				<h3>Like it?</h3>
 				<p>Want to help make this plugin even better? Donate now!</p>
-				<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-				<input type="hidden" name="cmd" value="_s-xclick">
-				<input type="hidden" name="hosted_button_id" value="PM5X7Z8JVF62W">
-				<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-				<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+				<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+					<input type="hidden" name="cmd" value="_s-xclick">
+					<input type="hidden" name="hosted_button_id" value="USZXRKWMBPAML">
+					<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+					<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
 				</form>
+
 				<p>Rate this plugin at <a target="_blank" href="http://wordpress.org/support/view/plugin-reviews/gsearch-plus">wordpress.org</a></p>		
 			</div>
 		</div>
@@ -117,80 +115,75 @@ class GOMO_Search_Plus_admin {
 	
 	// Register settings, sections and fields
 	
-	function gomo_search_register_settings() {
+	function register_settings() {
 	
 		//register jQuery scripts
-		wp_register_script( 'gsp-admin', GOMO_SP_URL . 'js/gsp-admin.js', array('jquery', 'wp-color-picker') );
+		wp_register_script( 'gsp-admin', GEE_SP_URL . 'js/gsp-admin.js', array( 'jquery', 'wp-color-picker') );
 		
-		//register Search+ settings - gomo_searchplus_options
-		register_setting( 'gomo-search-settings-group', 'gomo_searchplus_options', array($this, 'gomo_settings_sanitize'));
+		//register geeSearch+ settings - gee_searchplus_options
+		register_setting( 'gee-search-settings-group', 'gee_searchplus_options', array( $this, 'settings_sanitize' ) );
 		
 		//get options
-		$options = get_option( 'gomo_searchplus_options' );
+		$options = get_option( 'gee_searchplus_options' );
 		
 		//register settings sections
-		add_settings_section( 'gomo-settings-section-general', 'General Settings', array($this,'gomo_settings_section_general'), 'gomo-search-plus' );
-		add_settings_section( 'gomo-settings-section-exclude', 'Exclude from search', array($this,'gomo_settings_section_exclude'), 'gomo-search-plus' );
-		add_settings_section( 'gomo-settings-section-highlight', 'Highlight searched terms', array($this,'gomo_settings_section_highlight'), 'gomo-search-plus' );
+		add_settings_section( 'gee-settings-section-general', 'General Settings', array( $this,'settings_section_general'), 'gee-search-plus' );
+		add_settings_section( 'gee-settings-section-exclude', 'Exclude from search', array( $this,'settings_section_exclude'), 'gee-search-plus' );
+		add_settings_section( 'gee-settings-section-highlight', 'Highlight searched terms', array( $this,'settings_section_highlight'), 'gee-search-plus' );
 				
 		//SECTION: General Settings
 		// Enable
-		add_settings_field( 'gomo-settings-enable', 'Enable gSearch Plus engine', array($this,'gomo_settings_checkbox_enable'), 'gomo-search-plus', 'gomo-settings-section-general', array( 'name' => 'gomo_searchplus_options[enable]', 'value' => $options ) );
+		add_settings_field( 'gee-settings-enable', 'Enable gSearch Plus engine', array( $this,'settings_checkbox_enable'), 'gee-search-plus', 'gee-settings-section-general', array( 'name' => 'gee_searchplus_options[enable]', 'value' => $options ) );
 		
 		// Enable search on taxonomies
-		add_settings_field( 'gomo-settings-enable-tax', 'Enable search on taxonomies', array($this,'gomo_settings_checkbox'), 'gomo-search-plus', 'gomo-settings-section-general', array( 'name' => 'gomo_searchplus_options[enable_tax]', 'key' => 'enable_tax', 'value' => $options ) );
+		add_settings_field( 'gee-settings-enable-tax', 'Enable search on taxonomies', array( $this,'settings_checkbox'), 'gee-search-plus', 'gee-settings-section-general', array( 'name' => 'gee_searchplus_options[enable_tax]', 'key' => 'enable_tax', 'value' => $options ) );
 		
 		// Enable search on custom fields
-		add_settings_field( 'gomo-settings-customfields', 'Enable search on custom fields', array($this,'gomo_settings_checkbox'), 'gomo-search-plus', 'gomo-settings-section-general', array( 'name' => 'gomo_searchplus_options[custom_fields]', 'key' => 'custom_fields', 'value' => $options ) );
-		/* Add-ons: Media Search */
-		if( is_plugin_active('gsp-media-search/gsp-media-search.php') && get_option('gomo_spms_addon') ) {
-			add_settings_field( 'gomo-settings-mediasearch', 'Enable search on media <em>(add-on)</em>', array($this,'gomo_settings_checkbox'), 'gomo-search-plus', 'gomo-settings-section-general', array( 'name' => 'gomo_searchplus_options[enable_media]', 'key' => 'enable_media', 'value' => $options ) );
-		} /*else {
-			add_settings_field( 'gomo-settings-mediasearch', 'Enable search on media <em>(add-on)</em>', array($this,'gomo_buy_add_on'), 'gomo-search-plus', 'gomo-settings-section-general', array( 'name' => 'Media Search' ) );
-		} */
+		add_settings_field( 'gee-settings-customfields', 'Enable search on custom fields', array( $this,'settings_checkbox'), 'gee-search-plus', 'gee-settings-section-general', array( 'name' => 'gee_searchplus_options[custom_fields]', 'key' => 'custom_fields', 'value' => $options ) );
 		
 		// SECTION: Exclude Search
 		// Use stopwords
-		add_settings_field( 'gomo-settings-stopwords', 'Remove Stopwords by language', array($this,'gomo_settings_stopwords'), 'gomo-search-plus', 'gomo-settings-section-exclude', array( 'value' => $options ) );
+		add_settings_field( 'gee-settings-stopwords', 'Remove Stopwords by language', array( $this,'settings_stopwords'), 'gee-search-plus', 'gee-settings-section-exclude', array( 'value' => $options ) );
 		
 		// Exclude stopwords from search
-		add_settings_field( 'gomo-settings-specific-stop', 'Exclude specific stopwords', array($this,'gomo_settings_specific_stopwords'), 'gomo-search-plus', 'gomo-settings-section-exclude', array( 'value' => $options['specific_stops'] ) );
+		add_settings_field( 'gee-settings-specific-stop', 'Exclude specific stopwords', array( $this,'settings_specific_stopwords'), 'gee-search-plus', 'gee-settings-section-exclude', array( 'value' => $options['specific_stops'] ) );
 		
 		// Exclude taxonomies from search
-		add_settings_field( 'gomo-settings-taxonomies', 'Exclude Taxonomies', array($this,'gomo_settings_exclude_taxonomies'), 'gomo-search-plus', 'gomo-settings-section-exclude', array( 'value' => $options ) );
+		add_settings_field( 'gee-settings-taxonomies', 'Exclude Taxonomies', array( $this,'settings_exclude_taxonomies'), 'gee-search-plus', 'gee-settings-section-exclude', array( 'value' => $options ) );
 		
 		// SECTION:  Highlight search terms terms
 		// enable highlight
-		add_settings_field( 'gomo-settings-highlight', 'Highlight searched terms', array($this,'gomo_settings_checkbox'), 'gomo-search-plus', 'gomo-settings-section-highlight', array( 'name' => 'gomo_searchplus_options[highlight]', 'key' => 'highlight', 'value' => $options ) );
+		add_settings_field( 'gee-settings-highlight', 'Highlight searched terms', array( $this,'settings_checkbox'), 'gee-search-plus', 'gee-settings-section-highlight', array( 'name' => 'gee_searchplus_options[highlight]', 'key' => 'highlight', 'value' => $options ) );
 		// color picker
-		add_settings_field( 'gomo-settings-colorpicker', 'Highlight color', array($this,'gomo_settings_color_picker'), 'gomo-search-plus', 'gomo-settings-section-highlight', array( 'name' => 'gomo_searchplus_options[highlight_color]', 'value' => $options ) );
+		add_settings_field( 'gee-settings-colorpicker', 'Highlight color', array( $this,'settings_color_picker'), 'gee-search-plus', 'gee-settings-section-highlight', array( 'name' => 'gee_searchplus_options[highlight_color]', 'value' => $options ) );
 		// highlight allowed area
-		add_settings_field( 'gomo-settings-highlight-area', 'Highlight allowed areas (NEW!)', array( $this,'render_input_text'), 'gomo-search-plus', 'gomo-settings-section-highlight', array( 'name' => 'gomo_searchplus_options[highlight_area]', 'key' =>'highlight_area' , 'value' => $options ) );
+		add_settings_field( 'gee-settings-highlight-area', 'Highlight allowed areas (NEW!)', array( $this,'render_input_text'), 'gee-search-plus', 'gee-settings-section-highlight', array( 'name' => 'gee_searchplus_options[highlight_area]', 'key' =>'highlight_area' , 'value' => $options ) );
 		
 	}
 	
 	// Sanitize input
-	function gomo_settings_sanitize( $input ) {
+	function settings_sanitize( $input ) {
 		if( isset( $input['specific_stops'] ) && !empty( $input['specific_stops'] ) ) {
 			$input['specific_stops'] = str_replace( array(',,',',,,',',,,,'), ',' , preg_replace('/\s+/', ',', trim( $input['specific_stops'] )) );
 		}
+		$input['version'] = GEE_SP_VERSION;
 		return $input;
 	}
 	
 	// Sections
-	function gomo_settings_section_general() {
+	function settings_section_general() {
 	   // void
 	}
-	function gomo_settings_section_exclude() {
+	function settings_section_exclude() {
 		echo "Exclude specific stopwords and/or taxonomies from search (enable search on taxonomies).";
 	}
 	
-	function gomo_settings_section_highlight() {
+	function settings_section_highlight() {
 		 // void
 	}
 	
 	// Fields
-	function gomo_settings_checkbox_enable( $args ) {
+	function settings_checkbox_enable( $args ) {
 		$name = esc_attr( $args['name'] );
 		$options = $args['value'];
 		if( isset( $options['enable'] ) && $options['enable'] == 1 ) {
@@ -206,7 +199,7 @@ class GOMO_Search_Plus_admin {
 		}
 	}
 	
-	function gomo_settings_checkbox( $args ) {
+	function settings_checkbox( $args ) {
 		$name = esc_attr( $args['name'] );
 		$key = $args['key'];
 		$options = $args['value'];
@@ -227,7 +220,7 @@ class GOMO_Search_Plus_admin {
 		echo '<input type="text" name="'. $name.'" value="'. $value .'" class="regular-text ltr">';
 	}
 	
-	function gomo_settings_color_picker( $args ) {
+	function settings_color_picker( $args ) {
 		$name = esc_attr( $args['name'] );
 		$options = $args['value'];
 		if( !isset( $options['highlight_color'] ) ) {
@@ -237,7 +230,7 @@ class GOMO_Search_Plus_admin {
 	}
 	
 	
-	function gomo_settings_stopwords( $args ) {
+	function settings_stopwords( $args ) {
 		$options = $args['value'];
 		
 		if( isset( $options['stopwords'] ) ) { 
@@ -246,14 +239,14 @@ class GOMO_Search_Plus_admin {
 			$value = 0;
 		}
 		
-		$stop_files = glob(GOMO_SP_PATH ."stop/stopwords-*.php" );
+		$stop_files = glob( GEE_SP_PATH ."stop/stopwords-*.php" );
 		
-		echo '<select name="gomo_searchplus_options[stopwords]" style="width: 350px;">';
+		echo '<select name="gee_searchplus_options[stopwords]" style="width: 350px;">';
 		echo '<option value="0" '. selected( $value, 0 ) .'>Disable stopwords</option>';
 		echo '<option value="1" '. selected( $value, 1 ) .'>Enable specific stopwords only</option>';
 		if( is_array( $stop_files ) ) {
 			foreach ($stop_files as $stop_file) {
-				$lang = str_replace(".php", '', str_replace(GOMO_SP_PATH ."stop/stopwords-", '', $stop_file) );
+				$lang = str_replace(".php", '', str_replace(GEE_SP_PATH ."stop/stopwords-", '', $stop_file) );
 				echo '<option value="'.$lang.'" '. selected( $value, $lang ) .'>Use stopwords-'.$lang .'.php file</option>';
 			}
 		}
@@ -262,13 +255,13 @@ class GOMO_Search_Plus_admin {
 	}
 	
 	
-	function gomo_settings_specific_stopwords( $args ) {
+	function settings_specific_stopwords( $args ) {
 		$value = $args['value'];
-		echo '<textarea name="gomo_searchplus_options[specific_stops]" style="width: 350px; height: 100px;" >'. $value .'</textarea>';
+		echo '<textarea name="gee_searchplus_options[specific_stops]" style="width: 350px; height: 100px;" >'. $value .'</textarea>';
 	}
 	
 	
-	function gomo_settings_exclude_taxonomies($args) {
+	function settings_exclude_taxonomies($args) {
 		$options = $args['value'];
 		foreach ( get_taxonomies( array( 'public' => true ), 'objects' ) as $taxonomy ) {
 			if ( in_array( $taxonomy->name, array( 'link_category', 'nav_menu', 'post_format' ) ) )
@@ -278,25 +271,10 @@ class GOMO_Search_Plus_admin {
 			} else { 
 				$checked = ''; 
 			}
-			echo '<label><input type="checkbox" name="gomo_searchplus_options[exclude_tax-'. $taxonomy->name.']" value="1" '. $checked.' />    '. $taxonomy->labels->name .' ('. $taxonomy->name .')</label><br>';
+			echo '<label><input type="checkbox" name="gee_searchplus_options[exclude_tax-'. $taxonomy->name.']" value="1" '. $checked.' />    '. $taxonomy->labels->name .' ('. $taxonomy->name .')</label><br>';
 		}
 	}
-	
-	// Display Buy Add On field
-	function gomo_buy_add_on( $args ) {
-		$plugins = get_plugins();
-		if( is_array( $plugins ) && array_key_exists( 'gsp-media-search/gsp-media-search.php', $plugins ) ){
-			echo '<p><a class="button-secondary" href="plugins.php">Activate Add-On</a></p>';
-			
-		} else {
-			echo '<p style="color: #fd7800;"><a target="_blank" class="button-secondary" href="http://www.gomo.pt/plugins/gsearch-plus/">Buy Now›</a></p>';
-		}
-		
-	}
-	
 	
 }
-global $gomo_sp_admin;
-$gomo_sp_admin = new GOMO_Search_Plus_admin;
 
 ?>
