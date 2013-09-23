@@ -4,7 +4,7 @@ Plugin Name: geeSearch Plus
 Version: 1.2.0
 Plugin URI: http://www.geethemes.com
 Description: Improves the WordPress search engine without messing with the database, sorts results by relevance, and more. Simple and clean!
-Author: geeThemes, Luis Godinho
+Author: geeThemes
 Author URI: http://twitter.com/geethemeswp
 License: GPL2
 
@@ -43,11 +43,6 @@ if ( !defined('GEE_SP_URL') )
 	define( 'GEE_SP_URL', plugin_dir_url( __FILE__ ) );
 if ( !defined('GEE_SP_PATH') )
 	define( 'GEE_SP_PATH', plugin_dir_path( __FILE__ ) );
-
-/**
- * Include general classes
- */
-
 
 
 /** Register hooks that are fired when the plugin is activated and deactivated. */
@@ -150,7 +145,7 @@ class Gee_Search_Plus_Plugin {
 		
 		require_once( GEE_SP_PATH .'inc/class-search-plus.php' );
 		$gee_sp_frontend = new Gee_Search_Plus_Engine();
-
+		
 	}
 
 	

@@ -22,15 +22,15 @@ class Gee_Search_Plus_Engine {
 		//load options
 		$this->options = get_option( 'gee_searchplus_options' );
 		
-		if( isset( $this->options['enable'] ) &&  $this->options['enable'] == 1) {
+		if( ! empty( $this->options['enable'] ) ) {
 			//capture search query
-			add_action( 'pre_get_posts', array($this, 'capture_and_extend_search') );
+			add_action( 'pre_get_posts', array( $this, 'capture_and_extend_search') );
 			
 			//Make WP object correct after queries are made
 			add_action( 'wp', array( $this, 'add_search_wp_object') ); 
 			
 			//hook the function get_search_query
-			add_filter( 'get_search_query', array( $this, 'return_search_query'), 1);
+			add_filter( 'get_search_query', array( $this, 'return_search_query'), 20, 1 );
 			
 			// highlight filters
 			if( isset( $this->options['highlight'] ) &&  $this->options['highlight'] == 1) {
@@ -46,6 +46,10 @@ class Gee_Search_Plus_Engine {
 	function capture_and_extend_search( $query ) {
 		
 		if( $query->is_admin == 1 || !$query->is_search() || !$query->is_main_query() ) {
+			return;
+		}
+		
+		if( empty( $this->options['enable'] ) ) {
 			return;
 		}
 		
@@ -85,7 +89,6 @@ class Gee_Search_Plus_Engine {
 			
 			//sort by relevance
 			arsort( $this->search_results );
-			error_log(' SEARCH RESULTS: '. print_r( $this->search_results, true) );
 			$result_ids = array_keys( $this->search_results );
 			
 			$query->set( 's', '' );
@@ -97,8 +100,11 @@ class Gee_Search_Plus_Engine {
 	
 	/** Deliver the 's' query var to its original content to avoid issues on page loading */
 	function add_search_wp_object( $wp ) {
-		global $wp_query;
-		set_query_var('s', $this->search_terms );
+	
+		if( ! empty( $this->options['enable'] ) ) {
+			set_query_var('s', $this->search_terms );
+		}
+		
 	}
 	
 	
@@ -175,14 +181,12 @@ class Gee_Search_Plus_Engine {
 			
 			$words = explode(' ', strtolower( trim( $this->search_terms ) ) );
 			
-			//setup
-			$title = $content = '';
-		
 			while( $initial_query->have_posts() ) : $initial_query->the_post();
 			
 				$count = 0;
-				$title = strtolower( get_the_title() );
-				$content = strtolower( get_the_content() );
+				$title = strtolower( apply_filters( 'the_title', get_the_title(), get_the_ID() ) );
+				$content = strtolower( apply_filters( 'the_content', get_the_content() ) );
+				
 				foreach( $words as $word ) {
 					$count += $title_weight * substr_count( $title, $word );
 					$count += $content_weight * substr_count( $content, $word );
@@ -312,14 +316,22 @@ class Gee_Search_Plus_Engine {
 	/**
 	 * If theme uses get_search_query or the_search_query calls, then gSP returns the (filtered) search terms
 	 */
-	function return_search_query() {
-		return $this->search_terms;	
+	function return_search_query( $query ) {
+		if( empty( $this->options['enable'] ) ) {
+			return $query;
+		}
+		return $this->search_terms;
 	}
 	
 	/**
 	 * register js to highlight the searched terms
 	 */
 	function enqueue_styles_scripts() {
+	
+		if( empty( $this->options['enable'] ) ) {
+			return;
+		}
+		
 		if( !empty( $this->search_terms ) && $this->options['highlight_color'] != '' ) {
 			wp_register_script( 'gsp-highlight', GEE_SP_URL . 'js/gsp-highlight.js', array('jquery'), '1.1.7', true );
 			wp_enqueue_script( 'gsp-highlight' );

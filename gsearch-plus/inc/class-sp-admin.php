@@ -156,7 +156,7 @@ class Gee_Search_Plus_admin {
 		// color picker
 		add_settings_field( 'gee-settings-colorpicker', 'Highlight color', array( $this,'settings_color_picker'), 'gee-search-plus', 'gee-settings-section-highlight', array( 'name' => 'gee_searchplus_options[highlight_color]', 'value' => $options ) );
 		// highlight allowed area
-		add_settings_field( 'gee-settings-highlight-area', 'Highlight allowed areas (NEW!)', array( $this,'render_input_text'), 'gee-search-plus', 'gee-settings-section-highlight', array( 'name' => 'gee_searchplus_options[highlight_area]', 'key' =>'highlight_area' , 'value' => $options ) );
+		add_settings_field( 'gee-settings-highlight-area', 'Highlight allowed areas', array( $this,'render_input_text'), 'gee-search-plus', 'gee-settings-section-highlight', array( 'name' => 'gee_searchplus_options[highlight_area]', 'key' =>'highlight_area' , 'value' => $options ) );
 		
 	}
 	
