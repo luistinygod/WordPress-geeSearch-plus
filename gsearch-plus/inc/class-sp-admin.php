@@ -96,7 +96,6 @@ class Gee_Search_Plus_admin {
 			<div class="postbox-container" style="width:20%; padding-left: 2%;min-width:210px;max-width:210px;border-left: 1px solid #ddd;">
 				<a target="_blank" href="http://www.geethemes.com/"><img src="<?php echo GEE_SP_URL . '/img/geethemes-logo.png'; ?>" alt="geeThemes Premium WordPress Themes & Plugins" /></a>
 				<br>
-				<hr>
 				<h3>Like it?</h3>
 				<p>Want to help make this plugin even better? Donate now!</p>
 				<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
@@ -106,7 +105,7 @@ class Gee_Search_Plus_admin {
 					<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
 				</form>
 
-				<p>Rate this plugin at <a target="_blank" href="http://wordpress.org/support/view/plugin-reviews/gsearch-plus">wordpress.org</a></p>		
+				<p>Rate this plugin at <a target="_blank" href="http://wordpress.org/support/view/plugin-reviews/gsearch-plus">wordpress.org</a></p>
 			</div>
 		</div>
 		<?php
@@ -133,7 +132,7 @@ class Gee_Search_Plus_admin {
 				
 		//SECTION: General Settings
 		// Enable
-		add_settings_field( 'gee-settings-enable', 'Enable gSearch Plus engine', array( $this,'settings_checkbox_enable'), 'gee-search-plus', 'gee-settings-section-general', array( 'name' => 'gee_searchplus_options[enable]', 'value' => $options ) );
+		add_settings_field( 'gee-settings-enable', 'Enable geeSearch Plus engine', array( $this,'settings_checkbox_enable'), 'gee-search-plus', 'gee-settings-section-general', array( 'name' => 'gee_searchplus_options[enable]', 'value' => $options ) );
 		
 		// Enable search on taxonomies
 		add_settings_field( 'gee-settings-enable-tax', 'Enable search on taxonomies', array( $this,'settings_checkbox'), 'gee-search-plus', 'gee-settings-section-general', array( 'name' => 'gee_searchplus_options[enable_tax]', 'key' => 'enable_tax', 'value' => $options ) );
@@ -195,7 +194,7 @@ class Gee_Search_Plus_admin {
 		if( $checked == 'checked' ) {
 			echo '';
 		} else {
-			echo '<p style="color: brown;"><em>Turn on the gSearch Plus engine!</em></p>';
+			echo '<p style="color: brown;"><em>Turn on the geeSearch Plus engine!</em></p>';
 		}
 	}
 	

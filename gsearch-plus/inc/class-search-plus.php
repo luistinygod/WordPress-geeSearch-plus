@@ -14,12 +14,9 @@ class Gee_Search_Plus_Engine {
 	
 	// keeps the search terms
 	private $search_terms = '';
-
-	// keeps the post ids of original query
-	private $original_results_ids = array();
 	
-	//keeps the post ids of taxonomies query & custom fields query
-	private $extra_results_ids = array();
+	// keeps the search results ( key = post_id , value = relevance )
+	private $search_results = array();
 	
 	function __construct() {
 		//load options
@@ -27,13 +24,13 @@ class Gee_Search_Plus_Engine {
 		
 		if( isset( $this->options['enable'] ) &&  $this->options['enable'] == 1) {
 			//capture search query
-			add_action( 'pre_get_posts', array($this, 'capture_extend_search') );
+			add_action( 'pre_get_posts', array($this, 'capture_and_extend_search') );
 			
-			//make WordPress thinks it is running a Search
-			// add_action( 'wp', array($this, '_search') ); 
+			//Make WP object correct after queries are made
+			add_action( 'wp', array( $this, 'add_search_wp_object') ); 
 			
 			//hook the function get_search_query
-			add_filter( 'get_search_query', array($this, 'return_search_query'), 1);
+			add_filter( 'get_search_query', array( $this, 'return_search_query'), 1);
 			
 			// highlight filters
 			if( isset( $this->options['highlight'] ) &&  $this->options['highlight'] == 1) {
@@ -46,7 +43,7 @@ class Gee_Search_Plus_Engine {
 	/**
 	 * Extends search according to options
 	 */
-	function capture_extend_search( $query ) {
+	function capture_and_extend_search( $query ) {
 		
 		if( $query->is_admin == 1 || !$query->is_search() || !$query->is_main_query() ) {
 			return;
@@ -58,9 +55,8 @@ class Gee_Search_Plus_Engine {
 			$this->search_terms = $query->query_vars['s'];
 		}
 		
-		// 
-		$this->original_results_ids = array();
-		$this->extra_results_ids = array();
+		//reset search results array
+		$this->search_results = array();
 		
 		//1. Remove stopwords
 		$this->remove_stopwords();
@@ -78,34 +74,32 @@ class Gee_Search_Plus_Engine {
 		//3. Query taxonomies
 		$this->process_query_taxonomies();
 		
-		$this->original_results_ids = array_merge($this->original_results_ids, $this->extra_results_ids);
-		
 		//3.1 Query custom fields
 		$this->process_query_custom_fields();
 		
-		$this->original_results_ids = array_merge($this->original_results_ids, $this->extra_results_ids);
-		
 		//3.2 Hook for external filters to change the search results so far.
-		$filter_result = apply_filters( 'gee_search_original_results', $this->original_results_ids, $this->search_terms, $query->query_vars );
-		
-		if( isset( $filter_result ) && is_array( $filter_result ) && !empty( $filter_result ) ) {
-			$this->original_results_ids = array_merge( $this->original_results_ids, $filter_result );
-		}
-		
+		$this->search_results = apply_filters( 'gee_search_original_results', $this->search_results, $this->search_terms, $query->query_vars );
 		
 		//4. Deliver query $query
-		
-		if( !empty($this->original_results_ids) ) {
+		if( !empty( $this->search_results ) ) {
+			
+			//sort by relevance
+			arsort( $this->search_results );
+			error_log(' SEARCH RESULTS: '. print_r( $this->search_results, true) );
+			$result_ids = array_keys( $this->search_results );
+			
 			$query->set( 's', '' );
-			$query->set( 'post__in', $this->original_results_ids );
+			$query->set( 'post__in', $result_ids );
 			$query->set( 'orderby', 'post__in');
-			//$query->set('no_found_rows', 1 );
-			//$query->set('update_post_meta_cache', 0 );
-			//$query->set('update_post_term_cache', 0 );
 		}
 
 	}
 	
+	/** Deliver the 's' query var to its original content to avoid issues on page loading */
+	function add_search_wp_object( $wp ) {
+		global $wp_query;
+		set_query_var('s', $this->search_terms );
+	}
 	
 	
 	/**
@@ -167,34 +161,37 @@ class Gee_Search_Plus_Engine {
 	function process_original_query( $qvars ) {
 		
 		//runs the original query without paging
-		
-		$args = array_merge( $qvars, array('post_type' => 'any', 'nopaging' => true, 'no_found_rows' => true, 'update_post_meta_cache' => false, 'update_post_term_cache' => false ) );
+		$args = array_merge( $qvars, array( 'post_type' => 'any', 'nopaging' => true, 'no_found_rows' => true, 'update_post_meta_cache' => false, 'update_post_term_cache' => false ) );
 		$initial_query = new WP_Query( $args );
 		
-		$cool_posts=array();
-		$title = $content = '';
+		$cool_posts = array();
+		
 		
 		if( $initial_query->have_posts() ) {
+		
+			// prepare weights
+			$title_weight = (int)apply_filters( 'gee_search_title_weight', 5 );
+			$content_weight = (int)apply_filters( 'gee_search_content_weight', 1 );
 			
-			$words = explode(' ', trim( $this->search_terms ) );
+			$words = explode(' ', strtolower( trim( $this->search_terms ) ) );
+			
+			//setup
+			$title = $content = '';
 		
 			while( $initial_query->have_posts() ) : $initial_query->the_post();
-				$count= 0;
-				$title = apply_filters('the_title', $title, get_the_ID() );
-				$content = apply_filters('the_content', $content);
-				
-				$post_content = strtolower( $title . ' ' . $content );
-				
+			
+				$count = 0;
+				$title = strtolower( get_the_title() );
+				$content = strtolower( get_the_content() );
 				foreach( $words as $word ) {
-					$count += substr_count($post_content, strtolower( $word ) );
+					$count += $title_weight * substr_count( $title, $word );
+					$count += $content_weight * substr_count( $content, $word );
 				}
-				$cool_posts[ get_the_ID() ] = $count;
+				
+				$this->search_results[ get_the_ID() ] = $count;
 	
 			endwhile;
 			
-			
-			arsort($cool_posts);
-			$this->original_results_ids = array_keys($cool_posts);
 		}
 		
 	}
@@ -205,10 +202,10 @@ class Gee_Search_Plus_Engine {
 	function process_query_taxonomies() {
 		
 		//check if taxonomies search is enabled
-		if( !isset( $this->options['enable_tax'] ) || ( isset( $this->options['enable_tax'] ) && $this->options['enable_tax'] === '0' ) ) {
+		if( empty( $this->options['enable_tax'] ) ) {
 			return;
 		}
-	
+		
 		// prepare tax query
 		$my_tax_query = array();
 		foreach( get_taxonomies( array( 'public' => true ) ) as $taxonomy ) {
@@ -240,26 +237,33 @@ class Gee_Search_Plus_Engine {
 
 		//run the search by taxonomies query
 		if( !empty( $my_tax_query ) ) {
-			if( !empty( $this->original_results_ids ) ) {
-				$args = array(
-					'post_type' => 'any',
-					'nopaging' => true,
-					'tax_query' => array_merge( array('relation' => 'OR'), $my_tax_query ),
-					'post__not_in' => $this->original_results_ids
-				);
-			} else {
-				$args = array(
-					'post_type' => 'any',
-					'nopaging' => true,
-					'tax_query' => array_merge( array('relation' => 'OR'), $my_tax_query ),
-				);
-			}
-			$the_tax_query = new WP_Query ( array_merge( $args, array( 'no_found_rows' => true, 'update_post_meta_cache' => false, 'update_post_term_cache' => false ) ) );
+			
+			$my_tax_query['relation'] = 'OR';
+			
+			$args = array(
+				'post_type' => 'any',
+				'nopaging' => true,
+				'tax_query' => $my_tax_query,
+				'no_found_rows' => true, 
+				'update_post_meta_cache' => false, 
+				'update_post_term_cache' => false
+			);
+			
+			$the_tax_query = new WP_Query( $args );
 			
 			if( $the_tax_query->have_posts() ) {
-				// calculate all the IDs from the first query
+				
+				// prepare weights
+				$tax_weight = (int)apply_filters( 'gee_search_taxonomy_weight', 2 );
+				
 				while( $the_tax_query->have_posts() ) : $the_tax_query->the_post();
-				    $this->extra_results_ids[] = get_the_ID();
+					
+					if( array_key_exists( get_the_ID() , $this->search_results ) ) {
+						$this->search_results[ get_the_ID() ] += $tax_weight;
+					} else {
+						$this->search_results[ get_the_ID() ] = $tax_weight;
+					}
+					
 				endwhile;
 			}
 		}
@@ -270,32 +274,35 @@ class Gee_Search_Plus_Engine {
 	 */
 	function process_query_custom_fields() {
 		//check if custom fields search is enabled
-		if( !isset( $this->options['custom_fields'] ) || ( isset( $this->options['custom_fields'] ) && $this->options['custom_fields'] === '0' ) ) {
+		if( empty( $this->options['custom_fields'] ) ) {
 			return;
 		}
 	
-		if( !empty( $this->original_results_ids ) ) {
-			$args = array(
-				'post_type' => 'any',
-				'nopaging' => true,
-				'meta_value' => $this->search_terms,
-				'meta_compare' => 'LIKE',
-				'post__not_in' => $this->original_results_ids
-			);
-		} else {
-			$args = array(
-				'post_type' => 'any',
-				'nopaging' => true,
-				'meta_value' => $this->search_terms,
-				'meta_compare' => 'LIKE',
-			);
-		}
-		$the_tax_query = new WP_Query( array_merge( $args, array( 'no_found_rows' => true, 'update_post_meta_cache' => false, 'update_post_term_cache' => false ) ) );
+		$args = array(
+			'post_type' => 'any',
+			'nopaging' => true,
+			'meta_value' => $this->search_terms,
+			'meta_compare' => 'LIKE',
+			'no_found_rows' => true, 
+			'update_post_meta_cache' => false, 
+			'update_post_term_cache' => false
+		);
+		
+		$the_tax_query = new WP_Query( $args );
 		
 		if( $the_tax_query->have_posts() ) {
-			// calculate all the IDs from the first query
+		
+			// prepare weights
+			$custom_fields_weight = (int)apply_filters( 'gee_search_customfields_weight', 1 );
+		
 			while( $the_tax_query->have_posts() ) : $the_tax_query->the_post();
-			    $this->extra_results_ids[] = get_the_ID();
+			
+				if( array_key_exists( get_the_ID() , $this->search_results ) ) {
+					$this->search_results[ get_the_ID() ] += $custom_fields_weight;
+				} else {
+					$this->search_results[ get_the_ID() ] = $custom_fields_weight;
+				}
+			
 			endwhile;
 		}
 
