@@ -44,6 +44,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 ## Changelog
 
+### 1.2.0
+* Re-named from gSearch to geeSearch ( affected functions, hooks and classes )
+* New relevance engine
+* Corrected wp_title bug
+
 ### 1.1.8
 * Load frontend script on footer
 * Default highlight area div#content
