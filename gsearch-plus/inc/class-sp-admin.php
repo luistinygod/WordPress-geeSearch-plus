@@ -63,7 +63,7 @@ class Gee_Search_Plus_admin {
 		
 		switch( $context ) {
 			case 'highlight':
-				$html = '<h3>' . __('Highlight searched terms', 'gsearch-plus') .'</h3>';
+				$html = '<h3>' . __('Highlight searched terms', 'gee-search-plus') .'</h3>';
 				$html .= '<p>The field <strong>Highlight allowed areas</strong> enables the possibility to define the website areas where the plugin can highlight terms. It is defined to be a jQuery selector so it accepts any valid selector. </p>';
 				$html .= '<p><strong>Examples:</strong></p>';
 				$html .= '<ul>';
@@ -126,37 +126,46 @@ class Gee_Search_Plus_admin {
 		$options = get_option( 'gee_searchplus_options' );
 		
 		//register settings sections
-		add_settings_section( 'gee-settings-section-general', 'General Settings', array( $this,'settings_section_general'), 'gee-search-plus' );
-		add_settings_section( 'gee-settings-section-exclude', 'Exclude from search', array( $this,'settings_section_exclude'), 'gee-search-plus' );
-		add_settings_section( 'gee-settings-section-highlight', 'Highlight searched terms', array( $this,'settings_section_highlight'), 'gee-search-plus' );
+		add_settings_section( 'gee-settings-section-general', __( 'General Settings', 'gee-search-plus' ), array( $this,'settings_section_general'), 'gee-search-plus' );
+		add_settings_section( 'gee-settings-section-exclude', __( 'Exclude from search', 'gee-search-plus' ) , array( $this,'settings_section_exclude'), 'gee-search-plus' );
+		add_settings_section( 'gee-settings-section-highlight', __( 'Highlight searched terms', 'gee-search-plus' ), array( $this,'settings_section_highlight'), 'gee-search-plus' );
 				
 		//SECTION: General Settings
 		// Enable
-		add_settings_field( 'gee-settings-enable', 'Enable geeSearch Plus engine', array( $this,'settings_checkbox_enable'), 'gee-search-plus', 'gee-settings-section-general', array( 'name' => 'gee_searchplus_options[enable]', 'value' => $options ) );
+		add_settings_field( 'gee-settings-enable', __( 'Enable geeSearch Plus engine', 'gee-search-plus' ), array( $this,'settings_checkbox_enable'), 'gee-search-plus', 'gee-settings-section-general', array( 'name' => 'gee_searchplus_options[enable]', 'value' => $options ) );
 		
 		// Enable search on taxonomies
-		add_settings_field( 'gee-settings-enable-tax', 'Enable search on taxonomies', array( $this,'settings_checkbox'), 'gee-search-plus', 'gee-settings-section-general', array( 'name' => 'gee_searchplus_options[enable_tax]', 'key' => 'enable_tax', 'value' => $options ) );
+		add_settings_field( 'gee-settings-enable-tax', __( 'Enable search on taxonomies', 'gee-search-plus' ), array( $this,'settings_checkbox'), 'gee-search-plus', 'gee-settings-section-general', array( 'name' => 'gee_searchplus_options[enable_tax]', 'key' => 'enable_tax', 'value' => $options ) );
 		
 		// Enable search on custom fields
-		add_settings_field( 'gee-settings-customfields', 'Enable search on custom fields', array( $this,'settings_checkbox'), 'gee-search-plus', 'gee-settings-section-general', array( 'name' => 'gee_searchplus_options[custom_fields]', 'key' => 'custom_fields', 'value' => $options ) );
+		add_settings_field( 'gee-settings-customfields', __( 'Enable search on custom fields', 'gee-search-plus' ), array( $this,'settings_checkbox'), 'gee-search-plus', 'gee-settings-section-general', array( 'name' => 'gee_searchplus_options[custom_fields]', 'key' => 'custom_fields', 'value' => $options ) );
+		
+		// Query type AND or OR
+		$types_query = array( 'and' => __( 'Match all terms (AND)' , 'gee-search-plus' ), 'or' => __( 'Match at least one term (OR)' , 'gee-search-plus' ) );
+		add_settings_field( 'gee-settings-querytype', __( 'Search type', 'gee-search-plus'), array( $this,'settings_selectbox'), 'gee-search-plus', 'gee-settings-section-general', array( 'name' => 'gee_searchplus_options[query_type]', 'key' => 'query_type', 'value' => $options, 'choices' => $types_query ) );
+		
+		// Order type - Relevance / date
+		$types_order = array( 'relevance' => __( 'Relevance' , 'gee-search-plus' ), 'date' => __( 'Date' , 'gee-search-plus' ) );
+		add_settings_field( 'gee-settings-ordertype', __( 'Order results by', 'gee-search-plus' ), array( $this,'settings_selectbox'), 'gee-search-plus', 'gee-settings-section-general', array( 'name' => 'gee_searchplus_options[order_type]', 'key' => 'order_type', 'value' => $options, 'choices' => $types_order ) );
+		
 		
 		// SECTION: Exclude Search
 		// Use stopwords
-		add_settings_field( 'gee-settings-stopwords', 'Remove Stopwords by language', array( $this,'settings_stopwords'), 'gee-search-plus', 'gee-settings-section-exclude', array( 'value' => $options ) );
+		add_settings_field( 'gee-settings-stopwords', __( 'Remove Stopwords by language', 'gee-search-plus'), array( $this,'settings_stopwords'), 'gee-search-plus', 'gee-settings-section-exclude', array( 'value' => $options ) );
 		
 		// Exclude stopwords from search
-		add_settings_field( 'gee-settings-specific-stop', 'Exclude specific stopwords', array( $this,'settings_specific_stopwords'), 'gee-search-plus', 'gee-settings-section-exclude', array( 'value' => $options['specific_stops'] ) );
+		add_settings_field( 'gee-settings-specific-stop', __( 'Exclude specific stopwords', 'gee-search-plus' ), array( $this,'settings_specific_stopwords'), 'gee-search-plus', 'gee-settings-section-exclude', array( 'value' => $options['specific_stops'] ) );
 		
 		// Exclude taxonomies from search
-		add_settings_field( 'gee-settings-taxonomies', 'Exclude Taxonomies', array( $this,'settings_exclude_taxonomies'), 'gee-search-plus', 'gee-settings-section-exclude', array( 'value' => $options ) );
+		add_settings_field( 'gee-settings-taxonomies', __( 'Exclude Taxonomies', 'gee-search-plus' ), array( $this,'settings_exclude_taxonomies'), 'gee-search-plus', 'gee-settings-section-exclude', array( 'value' => $options ) );
 		
 		// SECTION:  Highlight search terms terms
 		// enable highlight
-		add_settings_field( 'gee-settings-highlight', 'Highlight searched terms', array( $this,'settings_checkbox'), 'gee-search-plus', 'gee-settings-section-highlight', array( 'name' => 'gee_searchplus_options[highlight]', 'key' => 'highlight', 'value' => $options ) );
+		add_settings_field( 'gee-settings-highlight', __( 'Highlight searched terms', 'gee-search-plus'), array( $this,'settings_checkbox'), 'gee-search-plus', 'gee-settings-section-highlight', array( 'name' => 'gee_searchplus_options[highlight]', 'key' => 'highlight', 'value' => $options ) );
 		// color picker
-		add_settings_field( 'gee-settings-colorpicker', 'Highlight color', array( $this,'settings_color_picker'), 'gee-search-plus', 'gee-settings-section-highlight', array( 'name' => 'gee_searchplus_options[highlight_color]', 'value' => $options ) );
+		add_settings_field( 'gee-settings-colorpicker', __( 'Highlight color', 'gee-search-plus'), array( $this,'settings_color_picker'), 'gee-search-plus', 'gee-settings-section-highlight', array( 'name' => 'gee_searchplus_options[highlight_color]', 'value' => $options ) );
 		// highlight allowed area
-		add_settings_field( 'gee-settings-highlight-area', 'Highlight allowed areas', array( $this,'render_input_text'), 'gee-search-plus', 'gee-settings-section-highlight', array( 'name' => 'gee_searchplus_options[highlight_area]', 'key' =>'highlight_area' , 'value' => $options ) );
+		add_settings_field( 'gee-settings-highlight-area', __( 'Highlight allowed areas', 'gee-search-plus'), array( $this,'render_input_text'), 'gee-search-plus', 'gee-settings-section-highlight', array( 'name' => 'gee_searchplus_options[highlight_area]', 'key' =>'highlight_area' , 'value' => $options ) );
 		
 	}
 	
@@ -174,7 +183,7 @@ class Gee_Search_Plus_admin {
 	   // void
 	}
 	function settings_section_exclude() {
-		echo "Exclude specific stopwords and/or taxonomies from search (enable search on taxonomies).";
+		_e( 'Exclude specific stopwords and/or taxonomies from search (enable search on taxonomies).', 'gee-search-plus');
 	}
 	
 	function settings_section_highlight() {
@@ -194,7 +203,9 @@ class Gee_Search_Plus_admin {
 		if( $checked == 'checked' ) {
 			echo '';
 		} else {
-			echo '<p style="color: brown;"><em>Turn on the geeSearch Plus engine!</em></p>';
+			echo '<div id="gsp_notice" class="updated settings-error">';
+			echo '<p><strong>' . __( 'Please note: geeSearch Plus engine is disabled. Enable it now to improve WordPress search!' , 'gee-search-plus' ) .'</strong></p>';
+			echo '</div>';
 		}
 	}
 	
@@ -208,6 +219,20 @@ class Gee_Search_Plus_admin {
 			$checked = '';
 		}
 		echo '<input type="checkbox" name="'. $name.'" value="1" '. $checked.'/>';
+	}
+	
+	function settings_selectbox( $args ) {
+		$name = esc_attr( $args['name'] );
+		$key = $args['key'];
+		$value = ( isset( $args['value'][ $key ] ) ) ? $args['value'][ $key ] : '';
+		$options = $args['choices'];
+		
+		echo '<select name="'. $name .'" >';
+		foreach ( $options as $id => $title ) {
+			echo '<option value="'. esc_attr( $id ) .'" '. selected( $id, $value ) .'>'. esc_html( $title ) .'</option>';
+		}
+		echo '</select>';
+		
 	}
 	
 	
@@ -241,15 +266,15 @@ class Gee_Search_Plus_admin {
 		$stop_files = glob( GEE_SP_PATH ."stop/stopwords-*.php" );
 		
 		echo '<select name="gee_searchplus_options[stopwords]" style="width: 350px;">';
-		echo '<option value="0" '. selected( $value, 0 ) .'>Disable stopwords</option>';
-		echo '<option value="1" '. selected( $value, 1 ) .'>Enable specific stopwords only</option>';
+		echo '<option value="0" '. selected( $value, 0 ) .'>' . __( 'Disable stopwords' , 'gee-search-plus' ) .'</option>';
+		echo '<option value="1" '. selected( $value, 1 ) .'>' . __( 'Enable specific stopwords only' , 'gee-search-plus' ) .'</option>';
 		if( is_array( $stop_files ) ) {
 			foreach ($stop_files as $stop_file) {
-				$lang = str_replace(".php", '', str_replace(GEE_SP_PATH ."stop/stopwords-", '', $stop_file) );
-				echo '<option value="'.$lang.'" '. selected( $value, $lang ) .'>Use stopwords-'.$lang .'.php file</option>';
+				$lang = str_replace(".php", '', str_replace( GEE_SP_PATH ."stop/stopwords-", '', $stop_file) );
+				echo '<option value="'.$lang.'" '. selected( $value, $lang ) .'>'.__( 'Use' , 'gee-search-plus' ).' stopwords-'. $lang .'.php</option>';
 			}
 		}
-		echo '<option value="stella" '. selected( $value, 'stella' ) .'>Use stopwords files according to Stella languages</option>';
+		echo '<option value="stella" '. selected( $value, 'stella' ) .'>' . __( 'Use stopwords files according to Stella languages' , 'gee-search-plus' ) .'</option>';
 		echo '</select>';
 	}
 	

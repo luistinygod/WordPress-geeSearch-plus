@@ -1,7 +1,7 @@
 <?php 
 /*
 Plugin Name: geeSearch Plus
-Version: 1.2.0
+Version: 1.3.0
 Plugin URI: http://www.geethemes.com
 Description: Improves the WordPress search engine without messing with the database, sorts results by relevance, and more. Simple and clean!
 Author: geeThemes
@@ -36,7 +36,7 @@ if ( !defined('DB_NAME') ) {
 	die;
 }
 
-define( 'GEE_SP_VERSION', '1.2.0' );
+define( 'GEE_SP_VERSION', '1.3.0' );
 
 
 if ( !defined('GEE_SP_URL') )
@@ -61,6 +61,9 @@ class Gee_Search_Plus_Plugin {
 	function __construct() {
 		
 		if( is_admin() ) {
+			
+			// Load plugin text domain
+			//---add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 			
 			// actions
 			add_action( 'plugins_loaded', array( $this, 'backend_actions' ), 0 );
@@ -105,6 +108,8 @@ class Gee_Search_Plus_Plugin {
 			$options = array();
 			$options['version'] = GEE_SP_VERSION;
 			$options['enable'] = 1;
+			$options['query_type'] = 'and'; // since 1.3.0
+			$options['order_type'] = 'relevance'; // since 1.3.0
 			$options['stopwords'] = 0; // do not use stopwords
 			$options['custom_fields'] = 0; // do not search on custom fields
 			$options['highlight'] = 0; // do not highlight searched terms
@@ -115,6 +120,7 @@ class Gee_Search_Plus_Plugin {
 			$options['enable_tax'] = 1; // Enable search on taxonomies by default
 			update_option( 'gee_searchplus_options', $options );
 		}
+		
 	}
 
 	/**
@@ -129,10 +135,24 @@ class Gee_Search_Plus_Plugin {
 	/**
 	 * Adds direct link to plugin settings page when on plugins screen
 	 */
-	public static function plugin_action_links( $actions ) {
-		$actions[] = '<a href="' . menu_page_url( 'gee-search-plus', false ) . '">Settings</a>';
-		return $actions;
+	public static function plugin_action_links( $links ) {
+		$action = array( '<a href="' . menu_page_url( 'gee-search-plus', false ) . '">Settings</a>' );
+		return array_merge( $action, $links );
 	}
+	
+	/**
+	 * Load the plugin text domain for translation.
+	 */
+	public function load_plugin_textdomain() {
+
+		$domain = 'gee-search-plus';
+		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
+
+		load_textdomain( $domain, WP_LANG_DIR . '/' . $domain . '/' . $domain . '-' . $locale . '.mo' );
+		load_plugin_textdomain( $domain, FALSE, dirname( plugin_basename( __FILE__ ) ) . '/lang/' );
+	}
+	
+	
 	
 	/** Run on backend only - admin */
 	function backend_actions() {
