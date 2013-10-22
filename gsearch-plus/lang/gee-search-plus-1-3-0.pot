@@ -1,0 +1,123 @@
+# Copyright (C) 2013 
+# This file is distributed under the same license as the  package.
+msgid ""
+msgstr ""
+"Project-Id-Version:  \n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/gsearch-plus\n"
+"POT-Creation-Date: 2013-10-22 12:08:25+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2013-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+
+#: inc/class-sp-admin.php:54 inc/class-sp-admin.php:66
+#: inc/class-sp-admin.php:131 inc/class-sp-admin.php:164
+msgid "Highlight searched terms"
+msgstr ""
+
+#: inc/class-sp-admin.php:99
+msgid "Like it?"
+msgstr ""
+
+#: inc/class-sp-admin.php:100
+msgid "Want to help make this plugin even better? Donate now!"
+msgstr ""
+
+#: inc/class-sp-admin.php:108
+msgid "Rate this plugin at "
+msgstr ""
+
+#: inc/class-sp-admin.php:129
+msgid "General Settings"
+msgstr ""
+
+#: inc/class-sp-admin.php:130
+msgid "Exclude from search"
+msgstr ""
+
+#: inc/class-sp-admin.php:135
+msgid "Enable geeSearch Plus engine"
+msgstr ""
+
+#: inc/class-sp-admin.php:138
+msgid "Enable search on taxonomies"
+msgstr ""
+
+#: inc/class-sp-admin.php:141
+msgid "Enable search on custom fields"
+msgstr ""
+
+#: inc/class-sp-admin.php:144
+msgid "Match all terms (AND)"
+msgstr ""
+
+#: inc/class-sp-admin.php:144
+msgid "Match at least one term (OR)"
+msgstr ""
+
+#: inc/class-sp-admin.php:145
+msgid "Search type"
+msgstr ""
+
+#: inc/class-sp-admin.php:148
+msgid "Relevance"
+msgstr ""
+
+#: inc/class-sp-admin.php:148
+msgid "Date"
+msgstr ""
+
+#: inc/class-sp-admin.php:149
+msgid "Order results by"
+msgstr ""
+
+#: inc/class-sp-admin.php:154
+msgid "Remove Stopwords by language"
+msgstr ""
+
+#: inc/class-sp-admin.php:157
+msgid "Exclude specific stopwords"
+msgstr ""
+
+#: inc/class-sp-admin.php:160
+msgid "Exclude Taxonomies"
+msgstr ""
+
+#: inc/class-sp-admin.php:166
+msgid "Highlight color"
+msgstr ""
+
+#: inc/class-sp-admin.php:168
+msgid "Highlight allowed areas"
+msgstr ""
+
+#: inc/class-sp-admin.php:186
+msgid ""
+"Exclude specific stopwords and/or taxonomies from search (enable search on "
+"taxonomies)."
+msgstr ""
+
+#: inc/class-sp-admin.php:207
+msgid ""
+"Please note: geeSearch Plus engine is disabled. Enable it now to improve "
+"WordPress search!"
+msgstr ""
+
+#: inc/class-sp-admin.php:269
+msgid "Disable stopwords"
+msgstr ""
+
+#: inc/class-sp-admin.php:270
+msgid "Enable specific stopwords only"
+msgstr ""
+
+#. translators: Use file-xpto.php
+#: inc/class-sp-admin.php:275
+msgid "Use"
+msgstr ""
+
+#: inc/class-sp-admin.php:278
+msgid "Use stopwords files according to Stella languages"
+msgstr ""

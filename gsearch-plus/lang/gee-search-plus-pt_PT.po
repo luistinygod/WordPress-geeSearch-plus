@@ -1,0 +1,128 @@
+# Copyright (C) 2013 
+# This file is distributed under the same license as the  package.
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/gsearch-plus\n"
+"POT-Creation-Date: 2013-10-22 12:08:25+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2013-10-22 13:57-0000\n"
+"Last-Translator: Luis Godinho <luis@gomo.pt>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"X-Generator: Poedit 1.5.4\n"
+
+#: inc/class-sp-admin.php:54 inc/class-sp-admin.php:66
+#: inc/class-sp-admin.php:131 inc/class-sp-admin.php:164
+msgid "Highlight searched terms"
+msgstr "Destaque dos resultados da pesquisa"
+
+#: inc/class-sp-admin.php:99
+msgid "Like it?"
+msgstr "Gostas deste plugin?"
+
+#: inc/class-sp-admin.php:100
+msgid "Want to help make this plugin even better? Donate now!"
+msgstr "Queres que este plugin seja ainda melhor? Faz um donativo!"
+
+#: inc/class-sp-admin.php:108
+msgid "Rate this plugin at "
+msgstr "Vota no plugin em "
+
+#: inc/class-sp-admin.php:129
+msgid "General Settings"
+msgstr "Opções Gerais"
+
+#: inc/class-sp-admin.php:130
+msgid "Exclude from search"
+msgstr "Excluir da pesquisa"
+
+#: inc/class-sp-admin.php:135
+msgid "Enable geeSearch Plus engine"
+msgstr "Activar o geeSearch Plus"
+
+#: inc/class-sp-admin.php:138
+msgid "Enable search on taxonomies"
+msgstr "Activar a pesquisa nas taxonomias"
+
+#: inc/class-sp-admin.php:141
+msgid "Enable search on custom fields"
+msgstr "Activar a pesquisa nos custom fields"
+
+#: inc/class-sp-admin.php:144
+msgid "Match all terms (AND)"
+msgstr "Encontrar todos os termos (AND)"
+
+#: inc/class-sp-admin.php:144
+msgid "Match at least one term (OR)"
+msgstr "Encontrar pelo menos um termo (OR)"
+
+#: inc/class-sp-admin.php:145
+msgid "Search type"
+msgstr "Tipo de pesquisa"
+
+#: inc/class-sp-admin.php:148
+msgid "Relevance"
+msgstr "Relevância"
+
+#: inc/class-sp-admin.php:148
+msgid "Date"
+msgstr "Data"
+
+#: inc/class-sp-admin.php:149
+msgid "Order results by"
+msgstr "Ordenar resultados por"
+
+#: inc/class-sp-admin.php:154
+msgid "Remove Stopwords by language"
+msgstr "Remover palavras por idioma"
+
+#: inc/class-sp-admin.php:157
+msgid "Exclude specific stopwords"
+msgstr "Remover palavras específicas"
+
+#: inc/class-sp-admin.php:160
+msgid "Exclude Taxonomies"
+msgstr "Excluir taxonomias"
+
+#: inc/class-sp-admin.php:166
+msgid "Highlight color"
+msgstr "Cor de destaque"
+
+#: inc/class-sp-admin.php:168
+msgid "Highlight allowed areas"
+msgstr "Áreas de destaque"
+
+#: inc/class-sp-admin.php:186
+msgid ""
+"Exclude specific stopwords and/or taxonomies from search (enable search on "
+"taxonomies)."
+msgstr ""
+"Excluir palavras específicas e/ou taxonomias da pesquisa (activa a opção de "
+"pesquisa nas taxonomias)."
+
+#: inc/class-sp-admin.php:207
+msgid ""
+"Please note: geeSearch Plus engine is disabled. Enable it now to improve "
+"WordPress search!"
+msgstr ""
+"Atenção: o motor de pesquisa geeSearch Plus está inactivo. Activa-o já para "
+"melhorar a pesquisa do WordPress"
+
+#: inc/class-sp-admin.php:269
+msgid "Disable stopwords"
+msgstr "Não excluir palavras"
+
+#: inc/class-sp-admin.php:270
+msgid "Enable specific stopwords only"
+msgstr "Excluir apenas palavras específicas"
+
+#. translators: Use file-xpto.php
+#: inc/class-sp-admin.php:275
+msgid "Use"
+msgstr "Utilizar o ficheiro  "
+
+#: inc/class-sp-admin.php:278
+msgid "Use stopwords files according to Stella languages"
+msgstr "Excluir palavras de acordo com o idioma Stella"

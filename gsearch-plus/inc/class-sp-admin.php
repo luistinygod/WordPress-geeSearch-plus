@@ -51,7 +51,7 @@ class Gee_Search_Plus_admin {
 				
 		$screen->add_help_tab( array(
 			'id' => 'highlight',
-			'title' => __('Highlight searched terms', 'gsearch-plus'),
+			'title' => __('Highlight searched terms', 'gee-search-plus'),
 			'content' => $this->contextual_help_content( 'highlight' )
 		));
 	
@@ -63,7 +63,7 @@ class Gee_Search_Plus_admin {
 		
 		switch( $context ) {
 			case 'highlight':
-				$html = '<h3>' . __('Highlight searched terms', 'gee-search-plus') .'</h3>';
+				$html = '<h3>' . esc_html__('Highlight searched terms', 'gee-search-plus') .'</h3>';
 				$html .= '<p>The field <strong>Highlight allowed areas</strong> enables the possibility to define the website areas where the plugin can highlight terms. It is defined to be a jQuery selector so it accepts any valid selector. </p>';
 				$html .= '<p><strong>Examples:</strong></p>';
 				$html .= '<ul>';
@@ -96,8 +96,8 @@ class Gee_Search_Plus_admin {
 			<div class="postbox-container" style="width:20%; padding-left: 2%;min-width:210px;max-width:210px;border-left: 1px solid #ddd;">
 				<a target="_blank" href="http://www.geethemes.com/"><img src="<?php echo GEE_SP_URL . '/img/geethemes-logo.png'; ?>" alt="geeThemes Premium WordPress Themes & Plugins" /></a>
 				<br>
-				<h3>Like it?</h3>
-				<p>Want to help make this plugin even better? Donate now!</p>
+				<h3><?php esc_html_e( 'Like it?', 'gee-search-plus'); ?></h3>
+				<p><?php esc_html_e( 'Want to help make this plugin even better? Donate now!', 'gee-search-plus'); ?></p>
 				<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 					<input type="hidden" name="cmd" value="_s-xclick">
 					<input type="hidden" name="hosted_button_id" value="USZXRKWMBPAML">
@@ -105,7 +105,7 @@ class Gee_Search_Plus_admin {
 					<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
 				</form>
 
-				<p>Rate this plugin at <a target="_blank" href="http://wordpress.org/support/view/plugin-reviews/gsearch-plus">wordpress.org</a></p>
+				<p><?php esc_html_e( 'Rate this plugin at ', 'gee-search-plus' ); ?><a target="_blank" href="http://wordpress.org/support/view/plugin-reviews/gsearch-plus">wordpress.org</a></p>
 			</div>
 		</div>
 		<?php
@@ -183,7 +183,7 @@ class Gee_Search_Plus_admin {
 	   // void
 	}
 	function settings_section_exclude() {
-		_e( 'Exclude specific stopwords and/or taxonomies from search (enable search on taxonomies).', 'gee-search-plus');
+		esc_html_e( 'Exclude specific stopwords and/or taxonomies from search (enable search on taxonomies).', 'gee-search-plus');
 	}
 	
 	function settings_section_highlight() {
@@ -204,7 +204,7 @@ class Gee_Search_Plus_admin {
 			echo '';
 		} else {
 			echo '<div id="gsp_notice" class="updated settings-error">';
-			echo '<p><strong>' . __( 'Please note: geeSearch Plus engine is disabled. Enable it now to improve WordPress search!' , 'gee-search-plus' ) .'</strong></p>';
+			echo '<p><strong>' . esc_html__( 'Please note: geeSearch Plus engine is disabled. Enable it now to improve WordPress search!' , 'gee-search-plus' ) .'</strong></p>';
 			echo '</div>';
 		}
 	}
@@ -266,22 +266,23 @@ class Gee_Search_Plus_admin {
 		$stop_files = glob( GEE_SP_PATH ."stop/stopwords-*.php" );
 		
 		echo '<select name="gee_searchplus_options[stopwords]" style="width: 350px;">';
-		echo '<option value="0" '. selected( $value, 0 ) .'>' . __( 'Disable stopwords' , 'gee-search-plus' ) .'</option>';
-		echo '<option value="1" '. selected( $value, 1 ) .'>' . __( 'Enable specific stopwords only' , 'gee-search-plus' ) .'</option>';
+		echo '<option value="0" '. selected( $value, 0 ) .'>' . esc_html__( 'Disable stopwords' , 'gee-search-plus' ) .'</option>';
+		echo '<option value="1" '. selected( $value, 1 ) .'>' . esc_html__( 'Enable specific stopwords only' , 'gee-search-plus' ) .'</option>';
 		if( is_array( $stop_files ) ) {
 			foreach ($stop_files as $stop_file) {
 				$lang = str_replace(".php", '', str_replace( GEE_SP_PATH ."stop/stopwords-", '', $stop_file) );
-				echo '<option value="'.$lang.'" '. selected( $value, $lang ) .'>'.__( 'Use' , 'gee-search-plus' ).' stopwords-'. $lang .'.php</option>';
+				/* translators: Use file-xpto.php */
+				echo '<option value="'.$lang.'" '. selected( $value, $lang ) .'>'.esc_html__( 'Use' , 'gee-search-plus' ).' stopwords-'. $lang .'.php</option>';
 			}
 		}
-		echo '<option value="stella" '. selected( $value, 'stella' ) .'>' . __( 'Use stopwords files according to Stella languages' , 'gee-search-plus' ) .'</option>';
+		echo '<option value="stella" '. selected( $value, 'stella' ) .'>' . esc_html__( 'Use stopwords files according to Stella languages' , 'gee-search-plus' ) .'</option>';
 		echo '</select>';
 	}
 	
 	
 	function settings_specific_stopwords( $args ) {
 		$value = $args['value'];
-		echo '<textarea name="gee_searchplus_options[specific_stops]" style="width: 350px; height: 100px;" >'. $value .'</textarea>';
+		echo '<textarea name="gee_searchplus_options[specific_stops]" style="width: 350px; height: 100px;" >'. esc_textarea( $value ).'</textarea>';
 	}
 	
 	

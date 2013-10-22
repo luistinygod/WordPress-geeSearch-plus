@@ -24,6 +24,8 @@ This plugin also includes a stopwords mechanism to remove the non-relevant words
 * Order results by Relevance or by Date
 * Define matching rules: at least one search term (OR query) or require all terms (AND query)
 * Define your own highlight style (CSS class: gee-search-highlight)
+* i18n ready
+
 
 = Features =
 * Searches through all the posts, pages and custom post types, by title and content
@@ -36,12 +38,13 @@ This plugin also includes a stopwords mechanism to remove the non-relevant words
 
 Very easy to use and setup! No new database tables or complex configurations. geeSearch Plus uses only WordPress' APIs and functions! Simple and Clean!
 
+= Available translations =
+* Portuguese
 
 
 = Notes =
 * This release is compatible with multisite single blog installation
 * This release is compatible with all WordPress versions since 3.5. If you are still using an older one, upgrade your WordPress **NOW!**
-
 
 
 == Installation ==

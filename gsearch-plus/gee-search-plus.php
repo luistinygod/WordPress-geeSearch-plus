@@ -63,7 +63,7 @@ class Gee_Search_Plus_Plugin {
 		if( is_admin() ) {
 			
 			// Load plugin text domain
-			//---add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
+			add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
 			
 			// actions
 			add_action( 'plugins_loaded', array( $this, 'backend_actions' ), 0 );
@@ -146,10 +146,9 @@ class Gee_Search_Plus_Plugin {
 	public function load_plugin_textdomain() {
 
 		$domain = 'gee-search-plus';
-		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
-
-		load_textdomain( $domain, WP_LANG_DIR . '/' . $domain . '/' . $domain . '-' . $locale . '.mo' );
-		load_plugin_textdomain( $domain, FALSE, dirname( plugin_basename( __FILE__ ) ) . '/lang/' );
+		//$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
+		// load_textdomain( $domain, WP_LANG_DIR . '/' . $domain . '/' . $domain . '-' . $locale . '.mo' );
+		load_plugin_textdomain( $domain, false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' );
 	}
 	
 	
