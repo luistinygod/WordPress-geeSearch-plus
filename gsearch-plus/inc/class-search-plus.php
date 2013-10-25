@@ -81,7 +81,6 @@ class Gee_Search_Plus_Engine {
 		
 		if( get_bloginfo( 'version' ) >= 3.7 ) {
 		
-			error_log('New settings 3.7');
 			
 			// Since 3.7, search query is relevance default
 			if( 'date' == $this->options['order_type'] ) {
@@ -217,7 +216,6 @@ class Gee_Search_Plus_Engine {
 	/** Combine search results from WordPress core with the extended geeSearch results */
 	function extend_search_at_wp( $wp ) {
 		global $wp_query;
-		//error_log('WP query BEGIN : '. print_r( $wp_query, true) );
 
 		if( ! is_search() ) {
 			return;
