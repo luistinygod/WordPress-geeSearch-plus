@@ -1,9 +1,15 @@
 WordPress-gSearch-plus
 ======================
 
-Improves the WordPress search engine without messing with the database, sorts results by relevance, and more. Simple and clean!
+geeSearch extends the WordPress search engine without messing with the database, sorts results by relevance (or date), and more. Simple and clean!
 
-gSearch Plus plugin improves WordPress' default mechanism by searching through custom taxonomies (including category and tags) and custom fields. It orders the results by relevance, calculating the search words hits through the title and content of each post. This plugin also includes a stopwords mechanism to remove the non-relevant words from the query, thus increasing the relevance of the results. Stopwords can be defined manually (using the WP admin) or by using the default files provided with the plugin package.
+By default WordPress searches all terms through all the posts' titles & contents and orders the results by date (up to 3.6.1) or by relevance (from 3.7). 
+
+## New Features (since 1.3.0)
+* Order results by Relevance or by Date
+* Define matching rules: at least one search term (OR query) or require all terms (AND query)
+* Define your own highlight style (CSS class: gee-search-highlight)
+* i18n ready
 
 ## Features
 
@@ -43,6 +49,15 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 ## Changelog
+
+### 1.3.0
+* Full review for WP 3.7
+* Order by relevance or by date
+* Allow OR and AND query type
+* Highlight class instead of inline styles
+* New plugin hooks for better control
+* Merge stopwords mechanism with WordPress new native stopwords mechanism
+* Prepared for i18n
 
 ### 1.2.0
 * Re-named from gSearch to geeSearch ( affected functions, hooks and classes )
