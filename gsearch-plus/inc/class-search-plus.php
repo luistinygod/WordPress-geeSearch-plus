@@ -30,7 +30,7 @@ class Gee_Search_Plus_Engine {
 		
 		if( ! empty( $this->options['enable'] ) ) {
 			//capture search query
-			add_action( 'pre_get_posts', array( $this, 'capture_and_extend_search') );
+			add_action( 'pre_get_posts', array( $this, 'capture_and_extend_search'),99 );
 			
 			//Since wp 3.7 - combine WordPress and geeSearch to remove stopwords
 			add_filter( 'wp_search_stopwords', array( $this, 'get_stopwords' ) );
@@ -268,10 +268,14 @@ class Gee_Search_Plus_Engine {
 			'post_type' => 'any',
 			'post__in' => $result_ids,
 			'orderby' => $order,
+			'posts_per_page' => $this->posts_per_page,
+			'paged' => $this->paged,
 			
 		);
 		
 		$new_search = new WP_Query( $new_args );
+		
+		error_log('#### NEW SEARCH: '. print_r( $new_search, true) );
 		
 		// merge results and prepare $wp_query for the real world
 		$wp_query->query_vars['nopaging'] = false;
@@ -279,9 +283,11 @@ class Gee_Search_Plus_Engine {
 		$wp_query->query_vars['paged'] = $this->paged;
 		$wp_query->posts = $new_search->posts;
 		$wp_query->post_count = $new_search->post_count;
+		$wp_query->found_posts = $new_search->found_posts;
+		$wp_query->max_num_pages = ceil( $new_search->found_posts / $this->posts_per_page );
 		$wp_query->post = $new_search->post;
 		
-		
+		error_log('#### WP_QUERY: '. print_r( $wp_query, true) );
 		
 	}
 	

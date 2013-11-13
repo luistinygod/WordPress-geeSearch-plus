@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=paypal%4
 Tags: search, relevance, improve search, custom post types search, custom taxonomies search, custom fields, stopwords, stella multi-language, highlight search terms
 Requires at least: 3.5
 Tested up to: 3.7
-Stable tag: 1.3.0
+Stable tag: 1.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -78,6 +78,9 @@ In order get this working properly you need to make sure there is a stopwords fi
 
 
 == Changelog ==
+= 1.3.1 =
+* fix pagination on search results
+
 = 1.3.0 =
 * Full review for WP 3.7
 * Order by relevance or by date
