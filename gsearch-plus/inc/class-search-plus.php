@@ -113,7 +113,7 @@ class Gee_Search_Plus_Engine {
 		
 		}
 		
-		$this->posts_per_page = isset( $query->query_vars['posts_per_page'] ) ? $query->query_vars['posts_per_page'] : 10;
+		$this->posts_per_page = isset( $query->query_vars['posts_per_page'] ) ? $query->query_vars['posts_per_page'] : get_option( 'posts_per_page', 10 );
 		$this->paged = isset( $query->query_vars['paged'] ) ? $query->query_vars['paged'] : 0;
 		
 		$query->set( 'posts_per_page', '' );
