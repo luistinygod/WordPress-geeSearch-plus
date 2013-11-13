@@ -50,6 +50,9 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 ## Changelog
 
+### 1.3.1
+* fix pagination on search results
+
 ### 1.3.0
 * Full review for WP 3.7
 * Order by relevance or by date
