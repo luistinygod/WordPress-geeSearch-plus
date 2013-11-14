@@ -1,12 +1,9 @@
 <?php
 /**
  * @package geeSearch_Plus Engine
+ * v_1_3_1
  */
 
-if ( !defined( 'GEE_SP_VERSION' ) ) {
-	header( 'HTTP/1.0 403 Forbidden' );
-	die;
-}
 
 class Gee_Search_Plus_Engine {
 	// keeps the plugin options
@@ -275,8 +272,6 @@ class Gee_Search_Plus_Engine {
 		
 		$new_search = new WP_Query( $new_args );
 		
-		error_log('#### NEW SEARCH: '. print_r( $new_search, true) );
-		
 		// merge results and prepare $wp_query for the real world
 		$wp_query->query_vars['nopaging'] = false;
 		$wp_query->query_vars['posts_per_page'] = $this->posts_per_page;
@@ -286,8 +281,6 @@ class Gee_Search_Plus_Engine {
 		$wp_query->found_posts = $new_search->found_posts;
 		$wp_query->max_num_pages = ceil( $new_search->found_posts / $this->posts_per_page );
 		$wp_query->post = $new_search->post;
-		
-		error_log('#### WP_QUERY: '. print_r( $wp_query, true) );
 		
 	}
 	
