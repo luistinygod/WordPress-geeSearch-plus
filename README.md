@@ -1,9 +1,10 @@
 WordPress-gSearch-plus
 ======================
 
-geeSearch extends the WordPress search engine without messing with the database, sorts results by relevance (or date), and more. Simple and clean!
+**geeSearch Plus** extends the WordPress search engine without messing with the database, sorts results by relevance (or date), and more.
 
-By default WordPress searches all terms through all the posts' titles & contents and orders the results by date (up to 3.6.1) or by relevance (from 3.7). 
+## New Features (since 1.4)
+* Extend search to Media
 
 ## New Features (since 1.3.0)
 * Order results by Relevance or by Date
@@ -49,6 +50,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 ## Changelog
+
+### 1.4.0
+* Extend search to media
 
 ### 1.3.1
 * fix pagination on search results
