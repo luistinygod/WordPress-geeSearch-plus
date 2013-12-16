@@ -1,0 +1,9 @@
+/* Add icon to admin page title */
+h2:before {
+	content: '\f179';
+	display: inline-block;
+	-webkit-font-smoothing: antialiased;
+	font: normal 29px/1 'dashicons'; 
+	vertical-align: middle; 
+	margin-right: 0.3em;
+}

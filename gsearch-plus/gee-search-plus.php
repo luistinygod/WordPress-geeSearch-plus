@@ -1,7 +1,7 @@
 <?php 
 /*
 Plugin Name: geeSearch Plus
-Version: 1.3.1
+Version: 1.4.0
 Plugin URI: http://www.geethemes.com
 Description: Improves the WordPress search engine without messing with the database, sorts results by relevance, and more. Simple and clean!
 Author: geeThemes
@@ -36,7 +36,7 @@ if ( !defined('DB_NAME') ) {
 	die;
 }
 
-define( 'GEE_SP_VERSION', '1.3.1' );
+define( 'GEE_SP_VERSION', '1.4.0' );
 
 
 if ( !defined('GEE_SP_URL') )
@@ -155,15 +155,18 @@ class Gee_Search_Plus_Plugin {
 	
 	/** Run on backend only - admin */
 	function backend_actions() {
-		require_once( GEE_SP_PATH .'inc/class-sp-admin.php' );
+		require_once( GEE_SP_PATH .'inc/class-gsp-admin.php' );
 		$gee_sp_backend = new Gee_Search_Plus_admin();
 	}
 	
 	/** Run on frontend only  */
 	function frontend_actions() {
 		
-		require_once( GEE_SP_PATH .'inc/class-search-plus.php' );
+		include_once( GEE_SP_PATH .'inc/class-search-plus.php' );
 		$gee_sp_frontend = new Gee_Search_Plus_Engine();
+		
+		include_once( GEE_SP_PATH .'inc/class-gsp-media-search.php' );
+		$gee_sp_media = new Gee_Media_Search();
 		
 	}
 

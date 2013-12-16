@@ -1,31 +1,27 @@
 === geeSearch Plus, improved WordPress search ===
-Contributors: luistinygod, geethemes
+Contributors: geethemes, luistinygod
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=paypal%40geethemes%2ecom&item_name=geeSearch%20Plus%20plugin&no_shipping=1&cn=Donation%20Notes&tax=0&currency_code=EUR&bn=PP%2dDonationsBF&charset=UTF%2d8
 Tags: search, relevance, improve search, custom post types search, custom taxonomies search, custom fields, stopwords, stella multi-language, highlight search terms
 Requires at least: 3.5
-Tested up to: 3.7
-Stable tag: 1.3.1
+Tested up to: 3.8
+Stable tag: 1.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Improves the WordPress search engine without messing with the database, sorts results by relevance or date, and more. Simple and clean!
+Extends WordPress search engine to taxonomies, custom fields and media, sorts results by relevance or date, and more. Simple and clean!
 
 == Description ==
 
-geeSearch extends the WordPress search engine without messing with the database, sorts results by relevance (or date), and more. Simple and clean!
+**geeSearch Plus** extends the WordPress search engine without messing with the database, sorts results by relevance (or date), and more.
 
-By default WordPress searches all terms through all the posts' titles & contents and orders the results by date (up to 3.6.1) or by relevance (from 3.7). 
+= New Features (since 1.4) =
+* Extend search to Media
 
-= Tired of complex plugins to improve the default WordPress search? =
-geeSearch Plus plugin improves WordPress' default mechanism by searching through custom taxonomies (including category and tags) and custom fields.  It orders the results by date or relevance, calculating the search words hits through the title and content, taxonomies and custom fields of each post. 
-This plugin also includes a stopwords mechanism to remove the non-relevant words from the query, thus increasing the relevance of the results. Stopwords can be defined manually (using the settings page) or by using the default files provided with the plugin package.
-
-= New Features (since 1.3.0) =
+= New Features (since 1.3) =
 * Order results by Relevance or by Date
 * Define matching rules: at least one search term (OR query) or require all terms (AND query)
 * Define your own highlight style (CSS class: gee-search-highlight)
 * i18n ready
-
 
 = Features =
 * Searches through all the posts, pages and custom post types, by title and content
@@ -37,6 +33,12 @@ This plugin also includes a stopwords mechanism to remove the non-relevant words
 * Integrates the stopwords mechanism with Stella multi-language plugin, by removing the current language stopwords from the search query
 
 Very easy to use and setup! No new database tables or complex configurations. geeSearch Plus uses only WordPress' APIs and functions! Simple and Clean!
+
+= Tired of complex plugins to improve the default WordPress search? =
+geeSearch Plus plugin improves WordPress' default mechanism by searching through custom taxonomies (including category and tags), custom fields and since version 1.4 it also searches through media. It orders the results by date or relevance, calculating the search words hits through the title and content, taxonomies, custom fields and media of each post.
+
+This plugin also includes a stopwords mechanism to remove the non-relevant words from the query, thus increasing the relevance of the results. Stopwords can be defined manually (using the settings page) or by using the default files provided with the plugin package.
+
 
 = Available translations =
 * Portuguese
@@ -75,9 +77,10 @@ In order get this working properly you need to make sure there is a stopwords fi
 1. Plugin settings page
 
 
-
-
 == Changelog ==
+= 1.4.0 =
+* Extend search to media
+
 = 1.3.1 =
 * fix pagination on search results
 
@@ -88,8 +91,7 @@ In order get this working properly you need to make sure there is a stopwords fi
 * Highlight class instead of inline styles
 * New plugin hooks for better control
 * Merge stopwords mechanism with WordPress new native stopwords mechanism
-* Prepared for i18n 
-
+* Prepared for i18n
 
 = 1.2.0 =
 * Re-named from gSearch to geeSearch ( affected functions, hooks and classes )

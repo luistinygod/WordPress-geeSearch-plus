@@ -295,15 +295,19 @@ class Gee_Search_Plus_Engine {
 			return;
 		}
 		
+		$count = 0;
+		
 		// prepare relevance weights
 		if( 'relevance' == $this->options['order_type'] ) {
 			$title_weight = (int)apply_filters( 'gee_search_title_weight', 5 );
 			$content_weight = (int)apply_filters( 'gee_search_content_weight', 1 );
 
 			$words = explode(' ', strtolower( trim( $this->search_terms ) ) );
+			
+			$count = $title_weight; //WP 3.7 - first post deserves more weight
 		}
 
-		$count = $title_weight; //WP 3.7 - first post deserves more weight
+		
 		
 		foreach( $posts as $post ) {
 			
