@@ -1,4 +1,4 @@
-WordPress-gSearch-plus
+WordPress-geeSearch-plus
 ======================
 
 **geeSearch Plus** extends the WordPress search engine without messing with the database, sorts results by relevance (or date), and more.
