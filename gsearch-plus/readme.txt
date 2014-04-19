@@ -3,7 +3,7 @@ Contributors: geethemes, luistinygod
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=paypal%40geethemes%2ecom&item_name=geeSearch%20Plus%20plugin&no_shipping=1&cn=Donation%20Notes&tax=0&currency_code=EUR&bn=PP%2dDonationsBF&charset=UTF%2d8
 Tags: search, relevance, improve search, custom post types search, custom taxonomies search, custom fields, stopwords, stella multi-language, highlight search terms
 Requires at least: 3.5
-Tested up to: 3.8
+Tested up to: 3.9
 Stable tag: 1.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -65,7 +65,7 @@ If your question isn't listed here, please open a new topic at the [Support tab]
 Let us know if you'd like to have a special feature implemented in this plugin. Please open a new topic in the plugin [Support tab](http://wordpress.org/support/plugin/gsearch-plus "geeSearch Plus support").
 
 = How do I install it in certain page using it as a widget? =
-geeSearch Plus plugin works behind the scenes by optimizing and changing the default WordPress search query. If you would like to have a search box on a sidebar or as a widget, just use the WordPress default search widget and geeSearch plus will do the hard work! 
+geeSearch Plus plugin works behind the scenes by optimizing and changing the default WordPress search query. If you would like to have a search box on a sidebar or as a widget, just use the WordPress default search widget and geeSearch plus will do the hard work!
 
 = What do I need to know if I'm using Stella multi-language plugin? =
 If you'd like to remove the correct language stopwords from your search query when using the Stella plugin, then go to **geeSearch Plus** settings and change the *Remove Stopwords by language* to the option *Use stopwords files according to Stella languages*.
@@ -126,11 +126,11 @@ In order get this working properly you need to make sure there is a stopwords fi
 * Minor corrections on jshighlight script
 
 = 1.1.0 =
-* New features: custom fields search & highlight searched terms. 
+* New features: custom fields search & highlight searched terms.
 * Includes two new js: jscolor plugin and jshighlight
 
 = 1.0.0 =
-* Initial release. 
+* Initial release.
 * No multisite compatibility. More to come shortly.
 
 == Upgrade Notice ==
