@@ -1,7 +1,7 @@
-<?php 
+<?php
 /*
 Plugin Name: geeSearch Plus
-Version: 1.4.0
+Version: 1.4.1
 Plugin URI: http://www.geethemes.com
 Description: Improves the WordPress search engine without messing with the database, sorts results by relevance, and more. Simple and clean!
 Author: geeThemes
@@ -12,7 +12,7 @@ geeSearch Plus, by geeThemes
 Copyright (C) 2013, geeThemes (hello@geethemes.com)
 
 This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License, version 2, as 
+it under the terms of the GNU General Public License, version 2, as
 published by the Free Software Foundation.
 
 This program is distributed in the hope that it will be useful,
@@ -21,8 +21,8 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program; if not, see <http://www.gnu.org/licenses/>, or 
-write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, 
+along with this program; if not, see <http://www.gnu.org/licenses/>, or
+write to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
 Boston, MA  02110-1301  USA.
 
 */
@@ -36,7 +36,7 @@ if ( !defined('DB_NAME') ) {
 	die;
 }
 
-define( 'GEE_SP_VERSION', '1.4.0' );
+define( 'GEE_SP_VERSION', '1.4.1' );
 
 
 if ( !defined('GEE_SP_URL') )
@@ -56,40 +56,40 @@ $gee_search_plus = new Gee_Search_Plus_Plugin();
 
 /** Main plugin class */
 class Gee_Search_Plus_Plugin {
-	
-	
+
+
 	function __construct() {
-		
+
 		if( is_admin() ) {
-			
+
 			// Load plugin text domain
 			add_action( 'init', array( $this, 'load_plugin_textdomain' ) );
-			
+
 			// actions
 			add_action( 'plugins_loaded', array( $this, 'backend_actions' ), 0 );
-			
+
 			// filters
 			add_filter( 'plugin_action_links_'. plugin_basename( __FILE__) , array( $this, 'plugin_action_links' ) );
-			
+
 		} else {
-			
+
 			add_action( 'plugins_loaded', array( $this, 'frontend_actions' ), 0 );
-			
+
 		}
-		
-		
+
+
 	}
-	
+
 	/**
 	 * Fired when the plugin is activated.
 	 *
 	 * @param    boolean    $network_wide    True if WPMU superadmin uses "Network Activate" action, false if WPMU is disabled or plugin is activated on an individual blog.
 	 */
 	public static function activate( $network_wide ) {
-		
+
 		//set default options if not created already
 		$options = get_option( 'gomo_searchplus_options' );
-		
+
 		//migrate from previous options name (since 1.2.0)
 		if( ! empty( $options ) ) {
 			delete_option( 'gomo_searchplus_options' );
@@ -97,13 +97,13 @@ class Gee_Search_Plus_Plugin {
 		} else {
 			$options = get_option( 'gee_searchplus_options' );
 		}
-		
+
 		//migrate highlight color from previous version of color picker (since v1.1.7)
 		if( isset( $options['highlight_color'] ) && false === strpos( $options['highlight_color'], '#' ) ) {
 			$options['highlight_color'] = '#'. $options['highlight_color'];
 			update_option( 'gee_searchplus_options', $options );
 		}
-		
+
 		if( !is_array( $options ) ) {
 			$options = array();
 			$options['version'] = GEE_SP_VERSION;
@@ -120,7 +120,7 @@ class Gee_Search_Plus_Plugin {
 			$options['enable_tax'] = 1; // Enable search on taxonomies by default
 			update_option( 'gee_searchplus_options', $options );
 		}
-		
+
 	}
 
 	/**
@@ -131,15 +131,18 @@ class Gee_Search_Plus_Plugin {
 	public static function deactivate( $network_wide ) {
 		//nothing to declare
 	}
-	
+
 	/**
 	 * Adds direct link to plugin settings page when on plugins screen
 	 */
 	public static function plugin_action_links( $links ) {
-		$action = array( '<a href="' . menu_page_url( 'gee-search-plus', false ) . '">Settings</a>' );
+		$action = array(
+			'<a href="' . menu_page_url( 'gee-search-plus', false ) . '">Settings</a>',
+			'<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=paypal%40geethemes%2ecom&item_name=geeSearch%20Plus%20plugin&no_shipping=1&cn=Donation%20Notes&tax=0&currency_code=EUR&bn=PP%2dDonationsBF&charset=UTF%2d8" target="_blank"><span class="dashicons dashicons-heart"></span> '.esc_html__( 'Donate', 'gee-search-plus' ).'</a>'
+			);
 		return array_merge( $action, $links );
 	}
-	
+
 	/**
 	 * Load the plugin text domain for translation.
 	 */
@@ -150,27 +153,27 @@ class Gee_Search_Plus_Plugin {
 		// load_textdomain( $domain, WP_LANG_DIR . '/' . $domain . '/' . $domain . '-' . $locale . '.mo' );
 		load_plugin_textdomain( $domain, false, dirname( plugin_basename( __FILE__ ) ) . '/lang/' );
 	}
-	
-	
-	
+
+
+
 	/** Run on backend only - admin */
 	function backend_actions() {
 		require_once( GEE_SP_PATH .'inc/class-gsp-admin.php' );
 		$gee_sp_backend = new Gee_Search_Plus_admin();
 	}
-	
+
 	/** Run on frontend only  */
 	function frontend_actions() {
-		
+
 		include_once( GEE_SP_PATH .'inc/class-search-plus.php' );
 		$gee_sp_frontend = new Gee_Search_Plus_Engine();
-		
+
 		include_once( GEE_SP_PATH .'inc/class-gsp-media-search.php' );
 		$gee_sp_media = new Gee_Media_Search();
-		
+
 	}
 
-	
+
 } // end class
 
 ?>
