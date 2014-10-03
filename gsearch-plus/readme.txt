@@ -140,4 +140,6 @@ In order get this working properly you need to make sure there is a stopwords fi
 
 == Upgrade Notice ==
 
-Nothing to declare
+= 1.4.1 =
+* Tested up to WP 4.0
+* Fix division by zero warning
