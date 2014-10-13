@@ -37,7 +37,7 @@ That’s all! We hope that you like our plugin. Suggestions, questions and other
 The WordPress gSearch Plus is licensed under the GPL v2 or later.
 
 > This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License, version 2, as 
+it under the terms of the GNU General Public License, version 2, as
 published by the Free Software Foundation.
 
 > This program is distributed in the hope that it will be useful,
@@ -50,6 +50,14 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 ## Changelog
+
+### 1.4.2
+* Fixed: Convert specific stopwords to lowercase on save
+* Fixed: Issue when searching on Tags (post_tag taxonomy) - conflict with plugins that inject specific post_types on query_vars without checking if 'any' is already selected.
+
+### 1.4.1
+* Tested up to WP 4.0
+* Fix division by zero warning
 
 ### 1.4.0
 * Extend search to media
@@ -99,11 +107,11 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 * Minor corrections on jshighlight script
 
 ### 1.1.0
-* New features: custom fields search & highlight searched terms. 
+* New features: custom fields search & highlight searched terms.
 * Includes two new js: jscolor plugin and jshighlight
 
 ### 1.0.0
-* Initial release. 
+* Initial release.
 * No multisite compatibility. More to come shortly.
 
 ## Author Information
