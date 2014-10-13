@@ -36,7 +36,7 @@ if ( !defined('DB_NAME') ) {
 	die;
 }
 
-define( 'GEE_SP_VERSION', '1.4.1' );
+define( 'GEE_SP_VERSION', '1.4.2' );
 
 
 if ( !defined('GEE_SP_URL') )
