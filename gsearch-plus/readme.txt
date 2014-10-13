@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=paypal%4
 Tags: search, relevance, improve search, custom post types search, custom taxonomies search, custom fields, stopwords, stella multi-language, highlight search terms
 Requires at least: 3.5
 Tested up to: 4.0
-Stable tag: 1.4.1
+Stable tag: 1.4.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -78,6 +78,10 @@ In order get this working properly you need to make sure there is a stopwords fi
 
 
 == Changelog ==
+
+= 1.4.2 =
+* Fixed: Convert specific stopwords to lowercase on save
+* Fixed: Issue when searching on Tags (post_tag taxonomy) - conflict with plugins that inject specific post_types on query_vars without checking if 'any' is already selected.
 
 = 1.4.1 =
 * Tested up to WP 4.0
