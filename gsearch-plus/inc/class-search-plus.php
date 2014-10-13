@@ -29,6 +29,8 @@ class Gee_Search_Plus_Engine {
 			//capture search query
 			add_action( 'pre_get_posts', array( $this, 'capture_and_extend_search'),99 );
 
+			add_action( 'pre_get_posts', array( $this, 'fix_too_many_post_types'), 999 );
+
 			//Since wp 3.7 - combine WordPress and geeSearch to remove stopwords
 			add_filter( 'wp_search_stopwords', array( $this, 'get_stopwords' ) );
 
@@ -56,6 +58,17 @@ class Gee_Search_Plus_Engine {
 		}
 	}
 
+	/**
+	 * @fix
+	 * It seems some plugins do add their post_type to WP_Query not checking if all the post_types are already included through 'any'
+	 *  and thus causing an error when searching 'post_tag'.
+	 * @since 1.4.2
+	 */
+	function fix_too_many_post_types( $query ) {
+		if( is_array( $query->query_vars['post_type'] ) && in_array( 'any', $query->query_vars['post_type'] ) ) {
+			$query->query_vars['post_type'] = array( 'any' );
+		}
+	}
 
 	/**
 	 * Before WP core query manipulate Search and fetch values
@@ -73,7 +86,7 @@ class Gee_Search_Plus_Engine {
 		if( empty( $query->query_vars['s'] ) ) {
 			return;
 		} else {
-			$this->search_terms = $query->query_vars['s'];
+			$this->search_terms = preg_replace('/\s+/', ' ', trim( $query->query_vars['s'] ) );
 		}
 
 		if( get_bloginfo( 'version' ) >= 3.7 ) {
@@ -96,8 +109,6 @@ class Gee_Search_Plus_Engine {
 				$words_filter = array_diff( $words_filter, $stopwords);
 				$this->search_terms = implode(' ', $words_filter );
 			}
-
-			$this->search_terms = preg_replace('/\s+/', ' ', trim( $this->search_terms ) );
 
 			// If stopwords mechanism removes all the search terms
 			if( empty( $this->search_terms ) || $this->search_terms == ' ' ) {
