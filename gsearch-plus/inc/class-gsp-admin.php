@@ -177,6 +177,7 @@ class Gee_Search_Plus_admin {
 	function settings_sanitize( $input ) {
 		if( isset( $input['specific_stops'] ) && !empty( $input['specific_stops'] ) ) {
 			$input['specific_stops'] = str_replace( array(',,',',,,',',,,,'), ',' , preg_replace('/\s+/', ',', trim( $input['specific_stops'] )) );
+			$input['specific_stops'] = strtolower( $input['specific_stops'] );
 		}
 		$input['version'] = GEE_SP_VERSION;
 		return $input;
