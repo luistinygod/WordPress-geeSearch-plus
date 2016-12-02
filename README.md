@@ -51,6 +51,10 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 ## Changelog
 
+### 1.4.4
+* [GOMO](http://gomo.pt/) replaces geeThemes brand.
+* Tested against WP version 4.6.1
+
 ### 1.4.2
 * Fixed: Convert specific stopwords to lowercase on save
 * Fixed: Issue when searching on Tags (post_tag taxonomy) - conflict with plugins that inject specific post_types on query_vars without checking if 'any' is already selected.
