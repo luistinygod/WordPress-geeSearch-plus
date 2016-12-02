@@ -3,8 +3,8 @@ Contributors: geethemes, luistinygod
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=paypal%40geethemes%2ecom&item_name=geeSearch%20Plus%20plugin&no_shipping=1&cn=Donation%20Notes&tax=0&currency_code=EUR&bn=PP%2dDonationsBF&charset=UTF%2d8
 Tags: search, relevance, improve search, custom post types search, custom taxonomies search, custom fields, stopwords, stella multi-language, highlight search terms
 Requires at least: 3.5
-Tested up to: 4.0
-Stable tag: 1.4.2
+Tested up to: 4.3.1
+Stable tag: 1.4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -78,6 +78,10 @@ In order get this working properly you need to make sure there is a stopwords fi
 
 
 == Changelog ==
+
+= 1.4.3 =
+* Fixed: PHP notices
+* Tested against WP version 4.3.1 - all fine!
 
 = 1.4.2 =
 * Fixed: Convert specific stopwords to lowercase on save

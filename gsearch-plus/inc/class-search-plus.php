@@ -65,7 +65,7 @@ class Gee_Search_Plus_Engine {
 	 * @since 1.4.2
 	 */
 	function fix_too_many_post_types( $query ) {
-		if( is_array( $query->query_vars['post_type'] ) && in_array( 'any', $query->query_vars['post_type'] ) ) {
+		if( array_key_exists( 'post_type', $query->query_vars ) && is_array( $query->query_vars['post_type'] ) && in_array( 'any', $query->query_vars['post_type'] ) ) {
 			$query->query_vars['post_type'] = array( 'any' );
 		}
 	}

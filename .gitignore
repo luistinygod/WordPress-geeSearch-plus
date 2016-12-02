@@ -1,6 +1,17 @@
-*.DS_Store
 .gitignore
+.codekit-cache
+*.sublime-*
+.sass-cache
+.idea/*
+.DS_Store
+
+### Grunt ###
+node_modules/*
 Gruntfile.js
 package.json
-*sublime-project
-*sublime-workspace
+
+### CodeKit ####
+.sass-cache
+*.codekit
+config.codekit
+config.codekit

@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: geeSearch Plus
-Version: 1.4.2
+Version: 1.4.3
 Plugin URI: http://www.geethemes.com
 Description: Improves the WordPress search engine without messing with the database, sorts results by relevance, and more. Simple and clean!
 Author: geeThemes
@@ -36,7 +36,7 @@ if ( !defined('DB_NAME') ) {
 	die;
 }
 
-define( 'GEE_SP_VERSION', '1.4.2' );
+define( 'GEE_SP_VERSION', '1.4.3' );
 
 
 if ( !defined('GEE_SP_URL') )
