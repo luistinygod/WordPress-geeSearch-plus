@@ -1,7 +1,7 @@
 WordPress-geeSearch-plus
 ======================
 
-**geeSearch Plus** extends the WordPress search engine without messing with the database, sorts results by relevance (or date), and more.
+**gee Search Plus** extends the WordPress search engine without messing with the database, sorts results by relevance (or date), and more.
 
 ## New Features (since 1.4)
 * Extend search to Media

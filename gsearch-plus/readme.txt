@@ -1,4 +1,4 @@
-=== geeSearch Plus, improved WordPress search ===
+=== gee Search Plus, improved WordPress search ===
 Contributors: wearegomo, luistinygod
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=paypal%40gomo%2ept&item_name=geeSearch%20Plus%20plugin&no_shipping=1&cn=Donation%20Notes&tax=0&currency_code=EUR&bn=PP%2dDonationsBF&charset=UTF%2d8
 Tags: search, relevance, improve search, custom post types search, custom taxonomies search, custom fields, stopwords, stella multi-language, highlight search terms
@@ -12,7 +12,7 @@ Extends WordPress search engine to taxonomies, custom fields and media, sorts re
 
 == Description ==
 
-**geeSearch Plus** extends the WordPress search engine without messing with the database, sorts results by relevance (or date), and more.
+**gee Search Plus** extends the WordPress search engine without messing with the database, sorts results by relevance (or date), and more.
 
 = New Features (since 1.4) =
 * Extend search to Media
@@ -32,10 +32,10 @@ Extends WordPress search engine to taxonomies, custom fields and media, sorts re
 * Removes stopwords from search query (merged with native WordPress stopwords mechanism)
 * Integrates the stopwords mechanism with Stella multi-language plugin, by removing the current language stopwords from the search query
 
-Very easy to use and setup! No new database tables or complex configurations. geeSearch Plus uses only WordPress' APIs and functions! Simple and Clean!
+Very easy to use and setup! No new database tables or complex configurations. gee Search Plus uses only WordPress' APIs and functions! Simple and Clean!
 
 = Tired of complex plugins to improve the default WordPress search? =
-geeSearch Plus plugin improves WordPress' default mechanism by searching through custom taxonomies (including category and tags), custom fields and since version 1.4 it also searches through media. It orders the results by date or relevance, calculating the search words hits through the title and content, taxonomies, custom fields and media of each post.
+gee Search Plus plugin improves WordPress' default mechanism by searching through custom taxonomies (including category and tags), custom fields and since version 1.4 it also searches through media. It orders the results by date or relevance, calculating the search words hits through the title and content, taxonomies, custom fields and media of each post.
 
 This plugin also includes a stopwords mechanism to remove the non-relevant words from the query, thus increasing the relevance of the results. Stopwords can be defined manually (using the settings page) or by using the default files provided with the plugin package.
 
@@ -52,24 +52,24 @@ This plugin also includes a stopwords mechanism to remove the non-relevant words
 == Installation ==
 
 1. Upload the `gsearch-plus` folder to the `/wp-content/plugins/` directory
-1. Activate the **geeSearch Plus** plugin through the 'Plugins' menu in WordPress
-1. Configure the plugin by going to the **geeSearch Plus** submenu that appears under your *Settings* menu
+1. Activate the **gee Search Plus** plugin through the 'Plugins' menu in WordPress
+1. Configure the plugin by going to the **gee Search Plus** submenu that appears under your *Settings* menu
 
 That’s all! We hope that you like our plugin. Suggestions, questions and other feedback are welcome. [twitter: @luistinygod](http://twitter.com/luistinygod)
 
 == Frequently Asked Questions ==
 
-If your question isn't listed here, please open a new topic at the [Support tab](http://wordpress.org/support/plugin/gsearch-plus "geeSearch Plus support").
+If your question isn't listed here, please open a new topic at the [Support tab](http://wordpress.org/support/plugin/gsearch-plus "gee Search Plus support").
 
 = I would like to have feature XYZ. What should I do? =
-Let us know if you'd like to have a special feature implemented in this plugin. Please open a new topic in the plugin [Support tab](http://wordpress.org/support/plugin/gsearch-plus "geeSearch Plus support").
+Let us know if you'd like to have a special feature implemented in this plugin. Please open a new topic in the plugin [Support tab](http://wordpress.org/support/plugin/gsearch-plus "gee Search Plus support").
 
 = How do I install it in certain page using it as a widget? =
-geeSearch Plus plugin works behind the scenes by optimizing and changing the default WordPress search query. If you would like to have a search box on a sidebar or as a widget, just use the WordPress default search widget and geeSearch plus will do the hard work!
+gee Search Plus plugin works behind the scenes by optimizing and changing the default WordPress search query. If you would like to have a search box on a sidebar or as a widget, just use the WordPress default search widget and gee Search plus will do the hard work!
 
 = What do I need to know if I'm using Stella multi-language plugin? =
-If you'd like to remove the correct language stopwords from your search query when using the Stella plugin, then go to **geeSearch Plus** settings and change the *Remove Stopwords by language* to the option *Use stopwords files according to Stella languages*.
-In order get this working properly you need to make sure there is a stopwords file per each configured language on your site. Check at the `/wp-content/plugins/gsearch-plus/stop` directory for the files. You'll find there are already several files pre-loaded with the geeSearch Plus plugin (English, Spanish, Portuguese, Italian, Czech, German, Finnish, French, Polish, Dutch and more). You may edit those files to include/remove stopwords, or add new files. When adding new stopwords files name them as *stopwords-[LANGUAGE].php*, where LANGUAGE is a two letter code representing the Stella language (en -> English, de -> German, and so on).
+If you'd like to remove the correct language stopwords from your search query when using the Stella plugin, then go to **gee Search Plus** settings and change the *Remove Stopwords by language* to the option *Use stopwords files according to Stella languages*.
+In order get this working properly you need to make sure there is a stopwords file per each configured language on your site. Check at the `/wp-content/plugins/gsearch-plus/stop` directory for the files. You'll find there are already several files pre-loaded with the gee Search Plus plugin (English, Spanish, Portuguese, Italian, Czech, German, Finnish, French, Polish, Dutch and more). You may edit those files to include/remove stopwords, or add new files. When adding new stopwords files name them as *stopwords-[LANGUAGE].php*, where LANGUAGE is a two letter code representing the Stella language (en -> English, de -> German, and so on).
 
 
 == Screenshots ==
@@ -111,7 +111,7 @@ In order get this working properly you need to make sure there is a stopwords fi
 * Prepared for i18n
 
 = 1.2.0 =
-* Re-named from gSearch to geeSearch ( affected functions, hooks and classes )
+* Re-named from gSearch to gee Search ( affected functions, hooks and classes )
 * New relevance engine
 * Corrected wp_title bug
 
