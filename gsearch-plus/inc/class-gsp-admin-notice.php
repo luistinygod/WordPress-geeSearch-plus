@@ -145,7 +145,7 @@ class Gee_Search_Plus_Admin_Notices {
 			return;
 		}
 
-		$message = 'Do you want to help making this plugin even better? <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=paypal%40geethemes%2ecom&item_name=geeSearch%20Plus%20plugin&no_shipping=1&cn=Donation%20Notes&tax=0&currency_code=EUR&bn=PP%2dDonationsBF&charset=UTF%2d8" target="_blank"><span class="dashicons dashicons-heart"></span><strong>Donate now!</strong></a>';
+		$message = 'Do you want to help making this plugin even better? <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=paypal%40gomo%2ept&item_name=geeSearch%20Plus%20plugin&no_shipping=1&cn=Donation%20Notes&tax=0&currency_code=EUR&bn=PP%2dDonationsBF&charset=UTF%2d8" target="_blank"><span class="dashicons dashicons-heart"></span><strong>Donate now!</strong></a>';
 
 		self::add_notice( array(
 			'message' => $message,

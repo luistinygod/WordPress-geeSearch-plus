@@ -95,18 +95,13 @@ class Gee_Search_Plus_admin {
 			</div>
 
 			<div class="postbox-container" style="width:20%; padding-left: 2%;min-width:210px;max-width:210px;border-left: 1px solid #ddd;">
-				<a target="_blank" href="http://www.geethemes.com/"><img src="<?php echo GEE_SP_URL . '/img/geethemes-logo.png'; ?>" alt="geeThemes Premium WordPress Themes and Plugins" /></a>
+				<p>Made by</p>
+				<a target="_blank" href="http://www.gomo.pt/"><?php echo get_avatar( 'hello@gomo.pt', 64 ); ?></a>
 				<br>
-				<h3><?php esc_html_e( 'Like it?', 'gee-search-plus'); ?></h3>
-				<p><?php esc_html_e( 'Want to help make this plugin even better? Donate now!', 'gee-search-plus'); ?></p>
-				<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-					<input type="hidden" name="cmd" value="_s-xclick">
-					<input type="hidden" name="hosted_button_id" value="USZXRKWMBPAML">
-					<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-					<img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
-				</form>
-
-				<p><?php esc_html_e( 'Rate this plugin at ', 'gee-search-plus' ); ?><a target="_blank" href="http://wordpress.org/support/view/plugin-reviews/gsearch-plus">wordpress.org</a></p>
+				<p>
+					<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=paypal%40gomo%2ept&item_name=geeSearch%20Plus%20plugin&no_shipping=1&cn=Donation%20Notes&tax=0&currency_code=EUR&bn=PP%2dDonationsBF&charset=UTF%2d8" target="_blank"><?php esc_html_e( 'Donate', 'gee-search-plus'); ?></a>
+					| <a target="_blank" href="http://wordpress.org/support/view/plugin-reviews/gsearch-plus">Rate @ wordpress.org</a>
+				</p>
 			</div>
 		</div>
 		<?php

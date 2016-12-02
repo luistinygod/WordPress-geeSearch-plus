@@ -1,5 +1,5 @@
 /* Add icon to admin page title */
-h2:before {
+.wrap h2:first-child:before {
 	content: '\f179';
 	display: inline-block;
 	-webkit-font-smoothing: antialiased;

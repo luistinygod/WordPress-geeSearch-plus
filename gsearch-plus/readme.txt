@@ -1,10 +1,10 @@
 === geeSearch Plus, improved WordPress search ===
-Contributors: geethemes, luistinygod
-Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=paypal%40geethemes%2ecom&item_name=geeSearch%20Plus%20plugin&no_shipping=1&cn=Donation%20Notes&tax=0&currency_code=EUR&bn=PP%2dDonationsBF&charset=UTF%2d8
+Contributors: wearegomo, luistinygod
+Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=paypal%40gomo%2ept&item_name=geeSearch%20Plus%20plugin&no_shipping=1&cn=Donation%20Notes&tax=0&currency_code=EUR&bn=PP%2dDonationsBF&charset=UTF%2d8
 Tags: search, relevance, improve search, custom post types search, custom taxonomies search, custom fields, stopwords, stella multi-language, highlight search terms
 Requires at least: 3.5
-Tested up to: 4.3.1
-Stable tag: 1.4.3
+Tested up to: 4.6.1
+Stable tag: 1.4.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -78,6 +78,10 @@ In order get this working properly you need to make sure there is a stopwords fi
 
 
 == Changelog ==
+
+= 1.4.4 =
+* [GOMO](http://gomo.pt/) replaces geeThemes brand.
+* Tested against WP version 4.6.1
 
 = 1.4.3 =
 * Fixed: PHP notices

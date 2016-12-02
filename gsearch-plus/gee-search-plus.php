@@ -1,15 +1,15 @@
 <?php
 /*
-Plugin Name: geeSearch Plus
-Version: 1.4.3
-Plugin URI: http://www.geethemes.com
+Plugin Name: gee Search Plus
+Version: 1.4.4
+Plugin URI: http://www.gomo.pt
 Description: Improves the WordPress search engine without messing with the database, sorts results by relevance, and more. Simple and clean!
-Author: geeThemes
-Author URI: http://twitter.com/geethemeswp
+Author: GOMO
+Author URI: http://twitter.com/wearegomo
 License: GPL2
 
-geeSearch Plus, by geeThemes
-Copyright (C) 2013, geeThemes (hello@geethemes.com)
+geeSearch Plus, by GOMO
+Copyright (C) 2016, GOMO (hello@gomo.pt)
 
 This program is free software; you can redistribute it and/or modify
 it under the terms of the GNU General Public License, version 2, as
@@ -36,7 +36,7 @@ if ( !defined('DB_NAME') ) {
 	die;
 }
 
-define( 'GEE_SP_VERSION', '1.4.3' );
+define( 'GEE_SP_VERSION', '1.4.4' );
 
 
 if ( !defined('GEE_SP_URL') )
@@ -138,7 +138,7 @@ class Gee_Search_Plus_Plugin {
 	public static function plugin_action_links( $links ) {
 		$action = array(
 			'<a href="' . menu_page_url( 'gee-search-plus', false ) . '">Settings</a>',
-			'<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=paypal%40geethemes%2ecom&item_name=geeSearch%20Plus%20plugin&no_shipping=1&cn=Donation%20Notes&tax=0&currency_code=EUR&bn=PP%2dDonationsBF&charset=UTF%2d8" target="_blank"><span class="dashicons dashicons-heart"></span> '.esc_html__( 'Donate', 'gee-search-plus' ).'</a>'
+			'<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=paypal%40gomo%2ept&item_name=geeSearch%20Plus%20plugin&no_shipping=1&cn=Donation%20Notes&tax=0&currency_code=EUR&bn=PP%2dDonationsBF&charset=UTF%2d8" target="_blank"><span class="dashicons dashicons-heart"></span> '.esc_html__( 'Donate', 'gee-search-plus' ).'</a>'
 			);
 		return array_merge( $action, $links );
 	}
